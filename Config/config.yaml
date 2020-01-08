@@ -7,3 +7,10 @@ FILES :
 WS :
   DOWNLOAD : \\ntgisfs\MAPINFO\spool\MOT
   EXTRACTED : \\ntgisfs\MAPINFO\spool\MOT\MOT_Latest
+
+DB :
+  SDE :
+    SERVER : NTSQLSDE12
+    INSTANCE : SDE
+    USER : sde
+    PSWD : sde
