@@ -1,0 +1,10 @@
+FROM continuumio/anaconda3
+
+WORKDIR '/motapp'
+
+COPY environement.yml
+RUN conda env create -f environment.yml
+
+COOPY . .
+
+CMD ["python", "bootstrap.py"]
