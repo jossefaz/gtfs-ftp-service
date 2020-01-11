@@ -1,9 +1,0 @@
-name: MOT
-channels:
-  - anaconda
-  - defaults
-dependencies:
-  - libgcc-ng=7.2.0=hdf63c60_3
-  - yaml=0.1.7=had09818_2
-prefix: /home/louis6/anaconda3/envs/MOT
-
