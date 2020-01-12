@@ -1,0 +1,28 @@
+# Official docker image.
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables:
+    IMAGE_TAG: louis6docker/mot_py:latest
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+test:
+  stage: build
+  script:
+    - docker build -t $IMAGE_TAG -f Dockerfile.dev .
+    - docker run -e CI=true $IMAGE_TAG
+
+  only:
+    - develop
+
+prod:
+    stage: build
+    script:
+      - docker build -t $IMAGE_TAG .
+      - docker push $IMAGE_TAG
+    only:
+      - production
+      - master
+
