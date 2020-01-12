@@ -17,7 +17,7 @@ class Config(object):
         if config_file is None :
             raise ValueError(configFiles.get("NOT_FOUND"))
         with open(os.path.join(os.path.dirname(__file__),config_file), 'r') as ymlfile:
-            cfg = yaml.load(ymlfile)
+            cfg = yaml.safe_load(ymlfile)
             return cfg
 
     def get_property(self, property_name):
