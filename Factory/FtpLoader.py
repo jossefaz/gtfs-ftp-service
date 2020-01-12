@@ -24,6 +24,7 @@ class FtpLoader:
             self.ftp = ftp
             self.root = ftp.pwd()
 
+
         except:  # ftplib.error_perm
             raise Exception('Connection to {} failed'.format(self.hostname))
 
