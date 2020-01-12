@@ -3,22 +3,26 @@ from ftplib import FTP
 
 
 class Ftp:
+    __slots__ = ['hostname', 'port', 'filename', 'ftp', 'root']
 
     def __init__(self, hostname, filename=None, port=21):
+
+        self.hostname = hostname
+        self.port = port
+        self.filename = filename
+
+    def connect(self):
         ftp = FTP()
         try:
-            ftp.connect(hostname, port)
+            ftp.connect(self.hostname, self.port)
         except:
-            raise Exception('\n\nConnection failed: {}: {}'.format(hostname, str(port)))
+            raise Exception('\n\nConnection failed: {}: {}'.format(self.hostname, str(self.port)))
         try:
             ftp.login()
-            self.start = ftp.pwd()
+            self.root = ftp.pwd()
         except:  # ftplib.error_perm
-            raise Exception('Connection to {} failed'.format(hostname))
+            raise Exception('Connection to {} failed'.format(self.hostname))
 
-        self.ftp = ftp
-        self.hostname = hostname
-        self.filename = filename
     def ls(self):
         return self.ftp.nlst()
 
@@ -27,9 +31,6 @@ class Ftp:
 
     def cwd(self, file):
         return self.ftp.cwd(file)
-
-    def pwd(self):
-        return self.ftp.pwd()
 
     def download(self):
         pass
