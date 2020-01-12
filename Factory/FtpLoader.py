@@ -2,7 +2,8 @@ import os
 from ftplib import FTP
 
 
-class Ftp:
+class FtpLoader:
+
     __slots__ = ['hostname', 'port', 'filename', 'ftp', 'root']
 
     def __init__(self, hostname, filename=None, port=21):
@@ -15,11 +16,14 @@ class Ftp:
         ftp = FTP()
         try:
             ftp.connect(self.hostname, self.port)
-        except:
-            raise Exception('\n\nConnection failed: {}: {}'.format(self.hostname, str(self.port)))
+        except Exception as e:
+            message = 'Connection failed: {}: {}'.format(self.hostname, str(self.port))
+            raise Exception(str(e))
         try:
             ftp.login()
+            self.ftp = ftp
             self.root = ftp.pwd()
+
         except:  # ftplib.error_perm
             raise Exception('Connection to {} failed'.format(self.hostname))
 
