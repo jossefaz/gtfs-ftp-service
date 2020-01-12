@@ -28,8 +28,6 @@ class FtpLoader:
         except:  # ftplib.error_perm
             raise Exception('Connection to {} failed'.format(self.hostname))
 
-    def ls(self):
-        return self.ftp.nlst()
 
     def get(self, file):
         return self.ftp.retrbinary('RETR ' + file, open('%s/%s' % (self.hostname, file), 'wb').write)

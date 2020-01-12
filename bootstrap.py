@@ -6,6 +6,4 @@ if __name__ == '__main__' :
     config = Config()
     ftpload = FtpLoader(config.get_property('URL').get('MOT'), config.get_property('FILES').get('TRANSPORTATION') )
     ftpload.connect()
-    allFiles = ftpload.ls()
-    print(u''.join(allFiles))
-    print(config.get_property("WS"))
+
