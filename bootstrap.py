@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*-
 from Configuration.config import Config
 from Factory.FtpLoader import FtpLoader
 if __name__ == '__main__' :
