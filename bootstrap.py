@@ -1,4 +1,5 @@
 from Configuration.config import Config
 
 if __name__ == '__main__' :
-    print("Goooo")
+    config = Config()
+    print(config.get_property("WS"))

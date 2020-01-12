@@ -1,0 +1,16 @@
+URL :
+  MOT_FTP_SITE : ftp://gtfs.mot.gov.il/
+
+FILES :
+  TRANSPORTATION : israel-public-transportation.zip
+
+WS :
+  DOWNLOAD : download
+  EXTRACTED : extract
+
+DB :
+  SDE :
+    SERVER : NTSQLSDE12
+    INSTANCE : SDE
+    USER : sde
+    PSWD : sde
