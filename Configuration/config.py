@@ -3,7 +3,8 @@ import sys
 import os
 configFiles = {
     "DEV" : "config_dev.yaml",
-    "PROD" : "config.yaml"
+    "PROD" : "config.yaml",
+    "NOT_FOUND" : "Only DEV or PROD argument is allowed"
 }
 
 class Config(object):
@@ -11,7 +12,10 @@ class Config(object):
         self._config = self.load_config()
         
     def load_config(self) :
+
         config_file = configFiles.get(sys.argv[1])
+        if config_file is None :
+            raise ValueError(configFiles.get("NOT_FOUND"))
         with open(os.path.join(os.path.dirname(__file__),config_file), 'r') as ymlfile:
             cfg = yaml.load(ymlfile)
             return cfg
