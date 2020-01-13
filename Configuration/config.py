@@ -1,4 +1,3 @@
-import yaml
 import hiyapyco
 import sys
 import os

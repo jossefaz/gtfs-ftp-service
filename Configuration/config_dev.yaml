@@ -1,6 +1,8 @@
 WS :
-  DOWNLOAD : download
-  EXTRACTED : extract
+  DOWNLOAD :
+    MOT : download
+  EXTRACTED :
+    MOT : extract
 
 DB :
   SDE :

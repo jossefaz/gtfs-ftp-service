@@ -15,6 +15,8 @@ if __name__ == '__main__' :
     urls = config.get_property("URL")
     for domain in urls :
         for dom, url in domain.items() :
-            print(url)
             ftp = FtpLoader(url)
-            ftp.connect()
+            download_dir = config.get_property("WS").get("DOWNLOAD").get(dom)
+            for file in config.get_property("FILES").get(dom) :
+                ftp.DownloadFile(file, outDir=download_dir)
+

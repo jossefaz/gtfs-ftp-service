@@ -10,3 +10,57 @@
 2020-01-13 18:29:45,560|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
 2020-01-13 18:31:52,048|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
 2020-01-13 18:32:02,828|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 18:46:47,906|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 18:47:37,362|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 18:50:27,619|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 18:55:18,144|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 19:11:14,798|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 19:15:06,670|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 19:15:32,205|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 19:16:02,926|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 20:54:36,815|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 20:55:16,911|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 21:04:58,594|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 21:09:55,579|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 22:10:25,266|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 22:50:15,606|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 22:50:15,944|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 22:50:36,304|INFO|Factory.FtpLoader|waiting 30 sec...
+2020-01-13 22:50:40,958|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 22:50:41,584|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 22:51:07,996|INFO|Factory.FtpLoader|waiting 30 sec...
+2020-01-13 22:51:12,287|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 22:51:20,539|INFO|Factory.FtpLoader|waiting 30 sec...
+2020-01-13 22:51:24,898|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 22:51:25,533|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 23:00:08,852|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 23:00:09,172|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 23:00:23,023|INFO|Factory.FtpLoader|waiting 30 sec...
+2020-01-13 23:00:40,208|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 23:00:40,560|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 23:10:05,515|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 23:10:05,830|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 23:17:57,643|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 23:17:57,897|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 23:18:05,860|INFO|Factory.FtpLoader|waiting 30 sec...
+2020-01-13 23:20:10,900|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-13 23:20:11,144|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:08:57,437|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:13:32,118|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:13:44,031|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:15:04,182|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:15:32,319|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:15:51,378|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:15:57,187|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:15:58,220|INFO|Factory.FtpLoader|waiting 30 sec...
+2020-01-14 00:16:28,250|INFO|Factory.FtpLoader|reconnect
+2020-01-14 00:16:40,254|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:16:45,368|INFO|Factory.FtpLoader|waiting 30 sec...
+2020-01-14 00:17:15,399|INFO|Factory.FtpLoader|reconnect
+2020-01-14 00:17:15,457|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:17:15,514|INFO|Factory.FtpLoader|waiting 30 sec...
+2020-01-14 00:18:12,169|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:18:12,317|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:18:14,112|INFO|Factory.FtpLoader|waiting 30 sec...
+2020-01-14 00:18:18,697|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il
+2020-01-14 00:18:18,836|INFO|Factory.FtpLoader|Connected to : ftp://gtfs.mot.gov.il

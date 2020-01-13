@@ -4,3 +4,21 @@
 2020-01-13 18:31:52,077|ERROR|<PID 11785:MainProcess>|Factory.FtpLoader|connect|line: 38|Authentication to myexample.gov.il failed
 2020-01-13 18:32:02,856|ERROR|<PID 11828:MainProcess>|Factory.FtpLoader|connect|line: 29|Connection to : ftp://myexample.gov.il failed, check if adress is correct
 2020-01-13 18:32:02,856|ERROR|<PID 11828:MainProcess>|Factory.FtpLoader|connect|line: 38|Authentication to myexample.gov.il failed
+2020-01-13 19:11:15,290|ERROR|<PID 22977:MainProcess>|Factory.FtpLoader|connect|line: 30|Connection to : ftp://myexample.gov.il failed, check if adress is correct
+2020-01-13 19:11:15,290|ERROR|<PID 22977:MainProcess>|Factory.FtpLoader|connect|line: 39|Authentication to myexample.gov.il failed
+2020-01-13 19:15:06,696|ERROR|<PID 23931:MainProcess>|Factory.FtpLoader|connect|line: 30|Connection to : ftp://myexample.gov.il failed, check if adress is correct
+2020-01-13 19:15:06,696|ERROR|<PID 23931:MainProcess>|Factory.FtpLoader|connect|line: 39|Authentication to myexample.gov.il failed
+2020-01-13 22:57:39,532|ERROR|<PID 4806:MainProcess>|Factory.FtpLoader|connect|line: 78|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-13 23:06:15,942|ERROR|<PID 7481:MainProcess>|Factory.FtpLoader|connect|line: 78|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-13 23:15:33,116|ERROR|<PID 9741:MainProcess>|Factory.FtpLoader|connect|line: 78|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-13 23:18:26,779|ERROR|<PID 11659:MainProcess>|Factory.FtpLoader|connect|line: 78|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-13 23:19:39,119|ERROR|<PID 11967:MainProcess>|Factory.FtpLoader|connect|line: 78|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-13 23:19:39,120|ERROR|<PID 11967:MainProcess>|Factory.FtpLoader|DownloadFile|line: 104|Cannot connect to ftp
+2020-01-13 23:19:56,779|ERROR|<PID 12049:MainProcess>|Factory.FtpLoader|connect|line: 78|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-13 23:25:06,557|ERROR|<PID 12128:MainProcess>|Factory.FtpLoader|connect|line: 78|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-14 00:08:57,733|ERROR|<PID 23314:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-14 00:13:32,180|ERROR|<PID 24359:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-14 00:13:44,092|ERROR|<PID 24402:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-14 00:15:10,435|ERROR|<PID 24774:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-14 00:15:34,185|ERROR|<PID 24882:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-14 00:19:01,328|ERROR|<PID 25597:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
