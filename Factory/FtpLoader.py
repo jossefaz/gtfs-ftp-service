@@ -1,14 +1,23 @@
 import os
 from ftplib import FTP
+import logging
+
 
 
 class FtpLoader:
 
-    __slots__ = ['hostname', 'port', 'ftp']
+    __slots__ = ['hostname', 'port', 'ftp', 'logger']
 
     def __init__(self, hostname, filename=None, port=21):
         self.hostname = hostname
         self.port = port
+        self.logger = logging.getLogger(__name__)
+        self.logger.info("FTP created")
+        self.logger.debug("FTP DEBUG")
+        self.logger.warning("FTP WARNING")
+        self.logger.critical("FTP Critical")
+        self.logger.error("FTP Critical")
+
 
     def connect(self):
         ftp = FTP()
@@ -16,11 +25,13 @@ class FtpLoader:
             ftp.connect(self.hostname, self.port)
         except Exception as e:
             message = 'Connection failed: {}: {}'.format(self.hostname, str(self.port))
+            self.logger.error(message)
             raise Exception(str(e))
         try:
             ftp.login()
             self.ftp = ftp
         except:  # ftplib.error_perm
+
             raise Exception('Authentication to {} failed'.format(self.hostname))
 
     def ftp_date_all(self):

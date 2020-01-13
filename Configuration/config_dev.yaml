@@ -1,9 +1,9 @@
 URL :
-  MOT : gtfs.mot.gov.il
+  - MOT : gtfs.mot.gov.il
 
 FILES :
-  TRANSPORTATION : israel-public-transportation.zip
-
+  MOT :
+    - israel-public-transportation.zip
 WS :
   DOWNLOAD : download
   EXTRACTED : extract

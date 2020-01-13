@@ -1,8 +1,9 @@
 URL :
-  MOT : gtfs.mot.gov.il
+  - MOT : gtfs.mot.gov.il
 
-FILES : 
-  TRANSPORTATION : israel-public-transportation.zip
+FILES :
+  MOT :
+    - israel-public-transportation.zip
 
 WS :
   DOWNLOAD : \\ntgisfs\MAPINFO\spool\MOT
