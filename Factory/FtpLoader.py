@@ -4,7 +4,7 @@ from ftplib import FTP
 
 class FtpLoader:
 
-    __slots__ = ['hostname', 'port', 'filename', 'ftp', 'root']
+    __slots__ = ['hostname', 'port', 'filename', 'ftp']
 
     def __init__(self, hostname, filename=None, port=21):
 
@@ -22,11 +22,8 @@ class FtpLoader:
         try:
             ftp.login()
             self.ftp = ftp
-            self.root = ftp.pwd()
-
-
         except:  # ftplib.error_perm
-            raise Exception('Connection to {} failed'.format(self.hostname))
+            raise Exception('Authentication to {} failed'.format(self.hostname))
 
 
     def get(self, file):
