@@ -2,6 +2,8 @@ import yaml
 import sys
 import os
 import logging
+from Templates.BaseClass import baseClass
+
 configFiles = {
     "DEV" : "config_dev.yaml",
     "PROD" : "config.yaml",
@@ -10,11 +12,13 @@ configFiles = {
 
 
 
-class Config(object):
+class Config(baseClass):
+
     def __init__(self):
         self._config = self.load_config()
+
+    def setClassLogger(self):
         self.logger = logging.getLogger(__name__)
-        self.logger.info("Config created")
         
     def load_config(self) :
 

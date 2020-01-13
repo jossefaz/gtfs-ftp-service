@@ -1,35 +1,39 @@
 import os
+from Templates.BaseClass import baseClass
 from ftplib import FTP
 import logging
+import sys
 
 
 
-class FtpLoader:
+
+class FtpLoader(baseClass):
 
     __slots__ = ['hostname', 'port', 'ftp', 'logger']
 
-    def __init__(self, hostname, filename=None, port=21):
+    def __init__(self, hostname, port=21):
+        self.setClassLogger()
         self.hostname = hostname
         self.port = port
-        self.logger = logging.getLogger(__name__)
-        self.logger.info("FTP created")
-        self.logger.debug("FTP DEBUG")
-        self.logger.warning("FTP WARNING")
-        self.logger.critical("FTP Critical")
-        self.logger.error("FTP Critical")
 
+    def setClassLogger(self):
+        self.logger = logging.getLogger(__name__)
 
     def connect(self):
         ftp = FTP()
         try:
             ftp.connect(self.hostname, self.port)
+            self.logger.info("Connected to : ftp://{}".format(self.hostname))
         except Exception as e:
-            message = 'Connection failed: {}: {}'.format(self.hostname, str(self.port))
+            message = 'Connection to : ftp://{} failed, checkout the name'.format(self.hostname)
             self.logger.error(message)
-            raise Exception(str(e))
+
         try:
             ftp.login()
             self.ftp = ftp
+            self.logger.debug("Logged into : ftp://{}".format(self.hostname))
+            self.ftp.set_pasv(True)
+            self.logger.debug("FTP set to passive mode : ftp://{}".format(self.hostname))
         except:  # ftplib.error_perm
 
             raise Exception('Authentication to {} failed'.format(self.hostname))

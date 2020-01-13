@@ -1,6 +1,0 @@
-2020-01-13 16:18:41,869|ERROR|<PID 3751:MainProcess>|__main__.<module>(12)|testError
-2020-01-13 16:20:03,385|ERROR|<PID 4182:MainProcess>|__main__.<module>(12)|testError
-2020-01-13 16:20:03,387|ERROR|<PID 4182:MainProcess>|Factory.FtpLoader.__init__(19)|FTP Critical
-2020-01-13 16:21:46,087|ERROR|<PID 4596:MainProcess>|__main__.<module>(12)|testError
-2020-01-13 16:22:37,058|ERROR|<PID 4850:MainProcess>|__main__.<module>(12)|testError
-2020-01-13 16:22:38,527|ERROR|<PID 4850:MainProcess>|Factory.FtpLoader.__init__(19)|FTP Critical
