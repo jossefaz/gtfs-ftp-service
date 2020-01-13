@@ -1,0 +1,2 @@
+2020-01-13 17:43:28,504|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-13 17:43:28,504|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
