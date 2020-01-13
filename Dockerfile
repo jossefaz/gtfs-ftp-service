@@ -1,15 +1,12 @@
-FROM ubuntu:18.04
-RUN apt-get update && apt-get install \
-  -y --no-install-recommends python3 python3-virtualenv
-WORKDIR '/app'
-ENV VIRTUAL_ENV=/opt/venv
-RUN python3 -m virtualenv --python=/usr/bin/python3 $VIRTUAL_ENV
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+FROM python:3.8-alpine as base
+FROM base as builder
+RUN mkdir /install
+WORKDIR /install
+COPY requirements.txt /requirements.txt
+RUN pip install --install-option="--prefix=/install" -r /requirements.txt
+FROM base
+COPY --from=builder /install /usr/local
+COPY src /app
+WORKDIR /app
 
-# Install dependencies:
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-# Run the application:
-COPY . .
 CMD ["python", "bootstrap.py", "PROD"]
