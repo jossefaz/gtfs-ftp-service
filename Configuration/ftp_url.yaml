@@ -1,0 +1,9 @@
+URL :
+  - MOT : gtfs.mot.gov.il
+  - EXAMPLE : myexample.gov.il
+
+FILES :
+  MOT :
+    - israel-public-transportation.zip
+  EXAMPLE :
+    - agreatefile.zip

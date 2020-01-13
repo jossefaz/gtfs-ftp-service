@@ -18,7 +18,7 @@ formatters:
     standard:
         format: "%(asctime)s|%(levelname)s|%(name)s|%(message)s"
     error:
-        format: "%(asctime)s|%(levelname)s|<PID %(process)d:%(processName)s>|%(name)s.%(funcName)s(%(lineno)d)|%(message)s"
+        format: "%(asctime)s|%(levelname)s|<PID %(process)d:%(processName)s>|%(name)s|%(funcName)s|line: %(lineno)d|%(message)s"
 
 handlers:
 
@@ -89,7 +89,7 @@ handlers:
 
 root:
     level: NOTSET
-    handlers: [console, error_console]
+    handlers: [error_console]
     propogate: no
 
 loggers:

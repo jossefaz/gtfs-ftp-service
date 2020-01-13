@@ -1,2 +1,6 @@
-2020-01-13 17:43:28,504|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
-2020-01-13 17:43:28,504|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-13 18:29:45,586|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-13 18:29:45,587|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-13 18:31:52,076|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-13 18:31:52,076|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-13 18:32:02,855|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-13 18:32:02,855|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il

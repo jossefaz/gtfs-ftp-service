@@ -1,0 +1,6 @@
+2020-01-13 18:29:47,725|ERROR|<PID 11249:MainProcess>|Factory.FtpLoader|connect|line: 29|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-13 18:29:47,726|ERROR|<PID 11249:MainProcess>|Factory.FtpLoader|connect|line: 38|Authentication to myexample.gov.il failed
+2020-01-13 18:31:52,077|ERROR|<PID 11785:MainProcess>|Factory.FtpLoader|connect|line: 29|Connection to : ftp://myexample.gov.il failed, checkout adress is correct
+2020-01-13 18:31:52,077|ERROR|<PID 11785:MainProcess>|Factory.FtpLoader|connect|line: 38|Authentication to myexample.gov.il failed
+2020-01-13 18:32:02,856|ERROR|<PID 11828:MainProcess>|Factory.FtpLoader|connect|line: 29|Connection to : ftp://myexample.gov.il failed, check if adress is correct
+2020-01-13 18:32:02,856|ERROR|<PID 11828:MainProcess>|Factory.FtpLoader|connect|line: 38|Authentication to myexample.gov.il failed

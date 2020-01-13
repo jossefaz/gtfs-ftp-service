@@ -25,7 +25,7 @@ class FtpLoader(baseClass):
             ftp.connect(self.hostname, self.port)
             self.logger.info("Connected to : ftp://{}".format(self.hostname))
         except Exception as e:
-            message = 'Connection to : ftp://{} failed, checkout the name'.format(self.hostname)
+            message = 'Connection to : ftp://{} failed, check if adress is correct'.format(self.hostname)
             self.logger.error(message)
 
         try:
@@ -35,8 +35,8 @@ class FtpLoader(baseClass):
             self.ftp.set_pasv(True)
             self.logger.debug("FTP set to passive mode : ftp://{}".format(self.hostname))
         except:  # ftplib.error_perm
+            self.logger.error('Authentication to {} failed'.format(self.hostname))
 
-            raise Exception('Authentication to {} failed'.format(self.hostname))
 
     def ftp_date_all(self):
         dir_listing = []
