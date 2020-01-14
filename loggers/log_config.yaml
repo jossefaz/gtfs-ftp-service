@@ -89,7 +89,7 @@ handlers:
 
 root:
     level: NOTSET
-    handlers: [error_console]
+    handlers: [console, error_console]
     propogate: no
 
 loggers:
