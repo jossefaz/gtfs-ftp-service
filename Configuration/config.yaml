@@ -1,6 +1,9 @@
 WS :
-  DOWNLOAD : \\ntgisfs\MAPINFO\spool\MOT
-  EXTRACTED : \\ntgisfs\MAPINFO\spool\MOT\MOT_Latest
+  DOWNLOAD :
+    MOT : download
+  EXTRACTED :
+    MOT : extract
+
 
 DB :
   SDE :
