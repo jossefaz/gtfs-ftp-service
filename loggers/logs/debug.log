@@ -157,3 +157,30 @@
 2020-01-14 00:18:48,778|DEBUG|Factory.FtpLoader|88393208  -  2877.4 Kb/s
 2020-01-14 00:19:01,067|DEBUG|Factory.FtpLoader|124484224  -  1174.8 Kb/s
 2020-01-14 00:19:01,123|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://myexample.gov.il
+2020-01-14 06:56:43,340|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 06:56:43,559|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 06:56:43,613|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 06:56:43,720|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 06:57:13,613|DEBUG|Factory.FtpLoader|91751848  -  2986.7 Kb/s
+2020-01-14 06:57:24,242|DEBUG|Factory.FtpLoader|124487781  -  1065.6 Kb/s
+2020-01-14 06:57:24,268|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://myexample.gov.il
+2020-01-14 06:59:37,555|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 06:59:37,663|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 06:59:37,693|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 06:59:37,803|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 07:00:07,694|DEBUG|Factory.FtpLoader|93108904  -  3030.9 Kb/s
+2020-01-14 07:00:18,011|DEBUG|Factory.FtpLoader|124487781  -  1021.4 Kb/s
+2020-01-14 07:00:18,012|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://myexample.gov.il
+2020-01-14 07:11:56,213|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 07:11:56,495|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 07:11:56,552|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 07:11:56,660|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 07:12:26,552|DEBUG|Factory.FtpLoader|92222184  -  3002.0 Kb/s
+2020-01-14 07:12:36,917|DEBUG|Factory.FtpLoader|124487781  -  1050.3 Kb/s
+2020-01-14 07:12:36,989|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://myexample.gov.il
+2020-01-14 07:13:15,518|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 07:13:15,623|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 07:13:15,648|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 07:13:15,756|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 07:13:45,647|DEBUG|Factory.FtpLoader|93008616  -  3027.6 Kb/s
+2020-01-14 07:13:55,886|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://myexample.gov.il

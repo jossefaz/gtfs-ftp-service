@@ -18,5 +18,5 @@ if __name__ == '__main__' :
             ftp = FtpLoader(url)
             download_dir = config.get_property("WS").get("DOWNLOAD").get(dom)
             for file in config.get_property("FILES").get(dom) :
-                ftp.DownloadFile(file, outDir=download_dir)
+                ftp.downloadFileItem(file, outDir=download_dir)
 

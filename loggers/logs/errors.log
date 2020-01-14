@@ -22,3 +22,7 @@
 2020-01-14 00:15:10,435|ERROR|<PID 24774:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
 2020-01-14 00:15:34,185|ERROR|<PID 24882:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
 2020-01-14 00:19:01,328|ERROR|<PID 25597:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-14 06:57:24,711|ERROR|<PID 5703:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-14 07:00:18,014|ERROR|<PID 6508:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-14 07:12:37,200|ERROR|<PID 9382:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name
+2020-01-14 07:13:55,888|ERROR|<PID 9667:MainProcess>|Factory.FtpLoader|connect|line: 63|Connection to : ftp://myexample.gov.il failed, checkout the name

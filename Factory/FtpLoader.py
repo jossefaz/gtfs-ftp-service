@@ -2,7 +2,6 @@ from Templates.BaseClass import baseClass
 from utils.path import *
 import threading
 import logging
-import ftplib
 from ftplib import FTP
 import socket
 import time
@@ -88,59 +87,61 @@ class FtpLoader(baseClass):
             else:
                 self.ftp.close()
 
-    def get_file_size(self, file):
+    def getFileSize(self, file):
         return self.ftp.size(file)
 
-    def DownloadFile(self, dst_filename, outDir = None):
-        res = ''
+    def openDlStream(self, outDir, filePtr, filename):
+        try:
+            self.connect()
+        except:
+            self.logger.error("Cannot connect to ftp while attempt to open stream")
+            return False
+        self.waiting = False
+        if outDir is not None:
+            downdir = os.path.join(GetParentDir(os.path.dirname(__file__)), outDir)
+            os.chdir(downdir)
+        res = self.ftp.retrbinary('RETR %s' % filename, filePtr.write) if filePtr.tell() == 0 else \
+            self.ftp.retrbinary('RETR %s' % filename, filePtr.write, rest=filePtr.tell())
+        return res
+
+    def downloadFileItem(self, dst_filename, outDir = None):
+
         local_filename = dst_filename
         if outDir is not None:
             local_filename = os.path.join(GetParentDir(os.path.dirname(__file__)), outDir, local_filename)
-        with open(local_filename, 'w+b') as filePtr:
-            self.ptr = filePtr.tell()
-            try:
-                conn = self.connect()
-            except:
-                return False
-            if conn :
-                dst_filesize = self.get_file_size(dst_filename)
-                mon = self.monitor(filePtr)
-                while dst_filesize > filePtr.tell():
-                    try:
+        try:
+            conn = self.connect()
+        except:
+            return False
+        if conn:
+            with open(local_filename, 'w+b') as filePtr:
+                    self.ptr = filePtr.tell()
+                    dst_filesize = self.getFileSize(dst_filename)
+                    mon = self.monitor(filePtr)
+                    downloaded = ''
+                    while dst_filesize > filePtr.tell():
                         try:
-                            self.connect()
-                        except :
-                            self.logger.error("Cannot connect to ftp")
-                            break
-                        self.waiting = False
-                        # retrieve file from position where we were disconnected
-                        if outDir is not None :
-                            downdir = os.path.join(GetParentDir(os.path.dirname(__file__)), outDir)
-                            os.chdir(downdir)
-                        res = self.ftp.retrbinary('RETR %s' % dst_filename, filePtr.write) if filePtr.tell() == 0 else \
-                                  self.ftp.retrbinary('RETR %s' % dst_filename, filePtr.write, rest=filePtr.tell())
+                            downloaded = self.openDlStream(outDir, filePtr, dst_filename)
+                            if downloaded is None :
+                                break
+                        except:
+                            self.max_attempts -= 1
+                            if self.max_attempts == 0:
+                                mon.set()
+                                self.logger.exception('')
+                                raise
+                            self.waiting = True
+                            self.logger.info('waiting 30 sec...')
+                            time.sleep(30)
+                            self.logger.info('reconnect')
 
-                    except:
-                        self.max_attempts -= 1
-                        if self.max_attempts == 0:
-                            mon.set()
-
-                            self.logger.exception('')
-                            raise
-                        self.waiting = True
-                        self.logger.info('waiting 30 sec...')
-                        time.sleep(30)
-                        self.logger.info('reconnect')
-
-
-                mon.set() #stop monitor
-                self.ftp.close()
-
-                if not res.startswith('226 Transfer complete'):
-                    self.logger.error('Downloaded file {0} is not full.'.format(dst_filename))
-                    # os.remove(local_filename)
-                    return None
-            return True
+                    if not downloaded.startswith('226 Transfer complete'):
+                        self.logger.error('Downloaded file {0} is not full.'.format(dst_filename))
+                        # os.remove(local_filename)
+                        return None
+                    mon.set() #stop monitor
+                    self.ftp.close()
+                    return True
 
 
 
