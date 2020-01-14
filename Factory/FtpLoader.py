@@ -3,7 +3,6 @@ from utils.path import *
 import threading
 import logging
 from ftplib import FTP
-from pathlib import Path
 import socket
 import time
 import os
@@ -110,7 +109,7 @@ class FtpLoader(baseClass):
         local_filename = dst_filename
         if outDir is not None:
             checkPath = os.path.join(GetParentDir(os.path.dirname(__file__)), outDir)
-            Path(checkPath).mkdir(parents=True, exist_ok=True)
+            safeOpen(checkPath)
             local_filename = os.path.join(checkPath, local_filename)
         try:
             conn = self.connect()

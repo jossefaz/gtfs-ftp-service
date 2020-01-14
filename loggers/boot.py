@@ -3,12 +3,16 @@ import logging.config
 import yaml
 import os
 import sys
+from utils.path import *
+
 configFiles = {
     "DEV" : "log_config.yaml",
     "PROD" : "log_config.yaml",
     "NOT_FOUND" : "Only DEV or PROD argument is allowed"
 }
 def setupLogging():
+    checkpath = os.path.join(os.path.dirname(__file__), 'logs')
+    safeOpen(checkpath)
     config_file = configFiles.get(sys.argv[1])
     if config_file is None:
         config_file = "log_config.yaml"
