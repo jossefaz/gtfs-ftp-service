@@ -184,3 +184,14 @@
 2020-01-14 07:13:15,756|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
 2020-01-14 07:13:45,647|DEBUG|Factory.FtpLoader|93008616  -  3027.6 Kb/s
 2020-01-14 07:13:55,886|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://myexample.gov.il
+2020-01-14 07:28:42,298|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 07:28:42,620|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 07:28:42,684|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 07:28:42,778|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 07:29:05,720|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 07:29:05,830|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 07:29:05,857|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://gtfs.mot.gov.il
+2020-01-14 07:29:05,968|DEBUG|Factory.FtpLoader|Logged into : ftp://gtfs.mot.gov.il
+2020-01-14 07:29:35,857|DEBUG|Factory.FtpLoader|90483120  -  2945.4 Kb/s
+2020-01-14 07:29:46,748|DEBUG|Factory.FtpLoader|124487781  -  1106.9 Kb/s
+2020-01-14 07:29:46,748|DEBUG|Factory.FtpLoader|FTP set to passive mode : ftp://myexample.gov.il
