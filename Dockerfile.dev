@@ -1,12 +1,22 @@
-FROM python:3.8-alpine as base
-FROM base as builder
-RUN mkdir /install
-WORKDIR /install
-COPY requirements.txt /requirements.txt
-RUN pip install --install-option="--prefix=/install" -r /requirements.txt
-FROM base
-COPY --from=builder /install /usr/local
-COPY . /app
+FROM python:3.8-alpine
+
+RUN apk add --update alpine-sdk
+RUN apk add --virtual .build-deps \
+        --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
+        --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+        libc-dev geos-dev geos unixodbc-dev unixodbc && \
+    runDeps="$(scanelf --needed --nobanner --recursive /usr/local \
+    | awk '{ gsub(/,/, "\nso:", $2); print "so:" $2 }' \
+    | xargs -r apk info --installed \
+    | sort -u)" && \
+    apk add --virtual .rundeps $runDeps
+RUN geos-config --cflags
+
+
+RUN mkdir /app
 WORKDIR /app
+COPY requirements.txt .
+RUN pip install --disable-pip-version-check -r requirements.txt
+COPY . .
 
 CMD ["python", "bootstrap.py", "DEV"]
