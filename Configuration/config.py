@@ -2,7 +2,7 @@ import hiyapyco
 import sys
 import os
 import logging
-from Templates.BaseClass import baseClass
+from Template.BaseClass import baseClass
 
 configFiles = {
     "DEV" : "config_dev.yaml",

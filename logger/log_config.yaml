@@ -5,15 +5,15 @@ incremental : False
 
 filters:
     info_filter:
-        () : loggers.filters.InfoFilter
+        () : logger.filters.InfoFilter
     error_filter :
-        () : loggers.filters.ErrorFilter
+        () : logger.filters.ErrorFilter
     debug_filter :
-        () : loggers.filters.DebugFilter
+        () : logger.filters.DebugFilter
     critical_filter :
-        () : loggers.filters.CriticalFilter
+        () : logger.filters.CriticalFilter
     warning_filter :
-        () : loggers.filters.WarningFilter
+        () : logger.filters.WarningFilter
 formatters:
     standard:
         format: "%(asctime)s|%(levelname)s|%(name)s|%(message)s"
@@ -33,7 +33,7 @@ handlers:
         class: logging.handlers.RotatingFileHandler
         level: INFO
         formatter: standard
-        filename: loggers/logs/info.log
+        filename: logger/logs/info.log
         maxBytes: 10485760 # 10MB
         backupCount: 20
         encoding: utf8
@@ -43,7 +43,7 @@ handlers:
         class: logging.handlers.RotatingFileHandler
         level: ERROR
         formatter: error
-        filename: loggers/logs/errors.log
+        filename: logger/logs/errors.log
         maxBytes: 10485760 # 10MB
         backupCount: 20
         encoding: utf8
@@ -53,7 +53,7 @@ handlers:
         class: logging.handlers.RotatingFileHandler
         level: DEBUG
         formatter: standard
-        filename: loggers/logs/debug.log
+        filename: logger/logs/debug.log
         maxBytes: 10485760 # 10MB
         backupCount: 20
         encoding: utf8
@@ -63,7 +63,7 @@ handlers:
         class: logging.handlers.RotatingFileHandler
         level: CRITICAL
         formatter: standard
-        filename: loggers/logs/critical.log
+        filename: logger/logs/critical.log
         maxBytes: 10485760 # 10MB
         backupCount: 20
         encoding: utf8
@@ -73,7 +73,7 @@ handlers:
         class: logging.handlers.RotatingFileHandler
         level: WARN
         formatter: standard
-        filename: loggers/logs/warn.log
+        filename: logger/logs/warn.log
         maxBytes: 10485760 # 10MB
         backupCount: 20
         encoding: utf8

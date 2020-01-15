@@ -72,6 +72,6 @@ fabric.properties
 
 MOT_venv/
 
-loggers/logs/
+logger/logs/
 
 download/

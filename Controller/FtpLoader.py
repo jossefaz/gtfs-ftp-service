@@ -1,4 +1,4 @@
-from Templates.BaseClass import baseClass
+from Template.BaseClass import baseClass
 from utils.path import *
 import threading
 import logging
