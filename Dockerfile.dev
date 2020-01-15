@@ -11,8 +11,6 @@ RUN apk add --virtual .build-deps \
     | sort -u)" && \
     apk add --virtual .rundeps $runDeps
 RUN geos-config --cflags
-
-
 RUN mkdir /app
 WORKDIR /app
 COPY requirements.txt .
