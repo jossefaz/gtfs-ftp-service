@@ -3,7 +3,7 @@ services :
   mot_dev :
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.dev.stable
     volumes:
       - .:/app
 
@@ -11,6 +11,6 @@ services :
   mot_test :
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.dev.stable
     volumes:
       - .:/app

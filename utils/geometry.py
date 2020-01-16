@@ -2,6 +2,8 @@ import csv
 from functools import partial
 import pyproj
 from shapely.ops import transform
+from utils.projections import *
+
 
 import shapely.wkt
 def chechPointWithinPolygon(point, polygon) :
@@ -14,14 +16,11 @@ def chechPointWithinPolygonList(point, polygonList) :
             return True
 
 def getTransformer(fromCRS, toCRS):
-    project = partial(
-        pyproj.transform,
-        pyproj.Proj(fromCRS),  # source coordinate system
-        pyproj.Proj(toCRS))  # destination coordinate system
+    project = partial(pyproj.transform,fromCRS, toCRS)
     return project
 
 def getJerusalemBorder() :
-    project = getTransformer('epsg:2039', 'epsg:4326')
+    project = getTransformer(israel_tm_grid, wgs84)
     jerusalem_polygon = []
     polylist = list(
         csv.reader(open('/home/louis6/Documents/ness/MOT/mot_py/ressource/border2.csv', "rU"), delimiter='|'))
