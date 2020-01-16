@@ -9,7 +9,7 @@ variables:
 test:
   stage: build
   script:
-    - docker build -t $IMAGE_TAG -f Dockerfile.dev.stable .
+    - docker build -t $IMAGE_TAG -f Dockerfile.dev .
     - docker run -e CI=true $IMAGE_TAG
 
   only:
