@@ -30,7 +30,6 @@ def checkPointsFromFile(dir, filename) :
                     continue
         print(len(listofPoitn))
         print(listofPoitn)
-checkPointsFromFile('download/israel-public-transportation', 'stops.txt')
 def checkLinesFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
