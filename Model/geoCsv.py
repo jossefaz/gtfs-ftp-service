@@ -11,7 +11,7 @@ import os
 def checkPointsFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
-    with open(workFile) as f :
+    with open(workFile, encoding='utf-8') as f :
         listofPoitn = []
         i = -1
         for chunk in read_in_chunks(f, 2048) :
@@ -30,12 +30,11 @@ def checkPointsFromFile(dir, filename) :
                     continue
         print(len(listofPoitn))
         print(listofPoitn)
-
 def checkLinesFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
     with open(workFile) as f :
-        listofPoitn = []
+        All_routes = {}
         i = 0
         id_index = 0
         lat_index = 1
@@ -65,20 +64,28 @@ def checkLinesFromFile(dir, filename) :
                                     Current_route_points.append(newPoint)
                                     continue
                                 except :
-                                    print("point {} of route {} cannot be converted to point".format(point[-1], Current_route_id))
+                                    # print("point {} of route {} cannot be converted to point".format(point[-1], Current_route_id))
                                     continue
                         #set the new Current route id
+                        if len(Current_route_points) > 0 :
+                            All_routes[Current_route_id] = Current_route_points
+                            Current_route_points = []
+
                         Current_route_id = point[id_index]
+                        Current_route_intersect = False
+                        #try to conver to Point :
+                        try:
+                            pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
+                            if chechPointWithinPolygonList(pointCheck, JERUSALEM) :
+                                Current_route_points.append(newPoint)
+                        except :
+                            # print("point {} of route {} cannot be converted to point".format(point[-1], Current_route_id))
+                            continue
 
-
-
-
-                        Current_route_id = point[id_index]
-                        pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
-                        chechPointWithinPolygonList(pointCheck, JERUSALEM) and listofPoitn.append([Current_route_id, point[0], pointCheck])
                     except :
                         i += 1
                         continue
         print (i)
-        print(len(listofPoitn))
-        print(listofPoitn)
+        print(All_routes)
+#
+# checkLinesFromFile('download/israel-public-transportation', 'shapes.txt')

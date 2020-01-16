@@ -1,4 +1,4 @@
-
+#-*- coding: UTF-8 -*-
 
 def read_in_chunks(file_object, chunk_size=1024):
     while True:
