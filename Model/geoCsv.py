@@ -69,7 +69,8 @@ def checkLinesFromFile(dir, filename) :
                         #set the new Current route id
                         if len(Current_route_points) > 0 :
                             All_routes[Current_route_id] = Current_route_points
-                        Current_route_points = []
+                            Current_route_points = []
+
                         Current_route_id = point[id_index]
                         Current_route_intersect = False
                         #try to conver to Point :
@@ -86,5 +87,5 @@ def checkLinesFromFile(dir, filename) :
                         continue
         print (i)
         print(All_routes)
-
-checkLinesFromFile('download/israel-public-transportation', 'shapes.txt')
+#
+# checkLinesFromFile('download/israel-public-transportation', 'shapes.txt')
