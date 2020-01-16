@@ -31,9 +31,9 @@ def checkPointsFromFile(dir, filename) :
         print(len(listofPoitn))
         print(listofPoitn)
 
-def mainGeo() :
+def checkLinesFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
-    workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), 'download/israel-public-transportation/stops.txt')
+    workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
     with open(workFile) as f :
         listofPoitn = []
         i = 0
@@ -54,9 +54,13 @@ def mainGeo() :
                 else :
                     try:
                         point = p.split(',')
-                        if point[id_index] != Current_route_id :
+                        #Check if aleready loop on this id
+                        if point[id_index] == Current_route_id :
+                            # Check if
                             if Current_route_intersect :
                                 pass
+
+
                         Current_route_id = point[id_index]
                         pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
                         chechPointWithinPolygonList(pointCheck, JERUSALEM) and listofPoitn.append([Current_route_id, point[0], pointCheck])
