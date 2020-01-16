@@ -31,4 +31,3 @@ def checkPointsFromFile(dir, filename) :
         print(len(listofPoitn))
         print(listofPoitn)
 
-checkPointsFromFile('download/israel-public-transportation', 'stops.txt')
