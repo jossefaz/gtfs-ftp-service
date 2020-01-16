@@ -11,7 +11,7 @@ import os
 def checkPointsFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
-    with open(workFile) as f :
+    with open(workFile, encoding='utf-8') as f :
         listofPoitn = []
         i = -1
         for chunk in read_in_chunks(f, 2048) :
@@ -30,7 +30,7 @@ def checkPointsFromFile(dir, filename) :
                     continue
         print(len(listofPoitn))
         print(listofPoitn)
-
+checkPointsFromFile('download/israel-public-transportation', 'stops.txt')
 def checkLinesFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
