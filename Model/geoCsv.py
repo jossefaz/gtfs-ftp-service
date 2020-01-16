@@ -31,3 +31,38 @@ def checkPointsFromFile(dir, filename) :
         print(len(listofPoitn))
         print(listofPoitn)
 
+def mainGeo() :
+    JERUSALEM = getJerusalemBorder()
+    workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), 'download/israel-public-transportation/stops.txt')
+    with open(workFile) as f :
+        listofPoitn = []
+        i = 0
+        id_index = 0
+        lat_index = 1
+        lon_index = 2
+        Current_route_points = []
+        Current_route_id = -1
+        Current_route_intersect = False
+        for chunk in read_in_chunks(f, 2048) :
+            for p in filter(None, chunk.split('\n')) :
+                if Current_route_id == -1 :
+                    columns = p.split(',')
+                    id_index = [i for i, s in enumerate(columns) if 'id' in s][0]
+                    lat_index = [i for i, s in enumerate(columns) if 'lat' in s][0]
+                    lon_index = [i for i, s in enumerate(columns) if 'lon' in s][0]
+                    Current_route_id  = 0
+                else :
+                    try:
+                        point = p.split(',')
+                        if point[id_index] != Current_route_id :
+                            if Current_route_intersect :
+                                pass
+                        Current_route_id = point[id_index]
+                        pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
+                        chechPointWithinPolygonList(pointCheck, JERUSALEM) and listofPoitn.append([Current_route_id, point[0], pointCheck])
+                    except :
+                        i += 1
+                        continue
+        print (i)
+        print(len(listofPoitn))
+        print(listofPoitn)
