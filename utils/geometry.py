@@ -23,7 +23,7 @@ def getJerusalemBorder() :
     project = getTransformer(israel_tm_grid, wgs84)
     jerusalem_polygon = []
     polylist = list(
-        csv.reader(open('/home/louis6/Documents/ness/MOT/mot_py/ressource/border2.csv', "rU"), delimiter='|'))
+        csv.reader(open(r'ressource/border2.csv', "rU"), delimiter='|'))
     for geom in polylist[0]:
         polygon = shapely.wkt.loads(geom)
         converted = transform(project, polygon)

@@ -9,7 +9,7 @@ JERUSALEM = getJerusalemBorder()
 
 @timing
 def mainGeo() :
-    workFile = os.path.join('/download/israel-public-transportation/stops.txt')
+    workFile = os.path.join(r'download/israel-public-transportation/stops.txt')
     with open(workFile) as f :
         listofPoitn = []
         i = 0
