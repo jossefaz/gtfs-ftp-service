@@ -20,5 +20,5 @@ if __name__ == '__main__' :
                 ftp.downloadFileItem(file, outDir=download_dir)
                 logger.debug(list_files(os.path.dirname(__file__)))
                 with zipfile.ZipFile(os.path.join(os.path.dirname(__file__),download_dir, file), 'r') as zip_ref:
-                    zip_ref.extractall(file[:-4])
+                    zip_ref.extractall(os.path.join(download_dir, file[:-4]))
                 checkPointsFromFile(os.path.join( download_dir, file[:-4]), 'stops.txt')
