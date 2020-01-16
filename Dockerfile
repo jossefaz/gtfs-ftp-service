@@ -1,12 +1,15 @@
-FROM python:3.8-alpine as base
-FROM base as builder
-RUN mkdir /install
-WORKDIR /install
-COPY requirements.txt /requirements.txt
-RUN pip install --install-option="--prefix=/install" -r /requirements.txt
-FROM base
-COPY --from=builder /install /usr/local
-COPY . /app
-WORKDIR /app
+FROM ubuntu:18.04
+RUN apt-get update && apt-get install \
+  -y --no-install-recommends python3 python3-virtualenv python-dev python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python-pip unixodbc unixodbc-dev
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m virtualenv --python=/usr/bin/python3 $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
-CMD ["python", "bootstrap.py", "PROD"]
+# Install dependencies:
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# Run the application:
+WORKDIR /app
+COPY . .
+CMD ["python", "bootstrap.py", "DEV"]
