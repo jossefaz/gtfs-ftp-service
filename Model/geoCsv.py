@@ -12,9 +12,9 @@ def checkPointsFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
     with open(workFile, encoding='utf-8') as f :
-        listofPoitn = []
+        all_points = {}
         i = -1
-        for chunk in read_in_chunks(f, 2048) :
+        for chunk in f:
             for p in filter(None, chunk.split('\n')) :
                 if i == -1 :
                     columns = p.split(',')
@@ -25,11 +25,14 @@ def checkPointsFromFile(dir, filename) :
                 try:
                     point = p.split(',')
                     pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
-                    chechPointWithinPolygonList(pointCheck, JERUSALEM) and listofPoitn.append([point[id_index], point[0], pointCheck])
+                    if chechPointWithinPolygonList(pointCheck, JERUSALEM) :
+                        all_points[point[id_index]] = [p, pointCheck.wkt]
+
                 except :
                     continue
-        print(len(listofPoitn))
-        print(listofPoitn)
+        print(len(all_points))
+        print(all_points)
+@timing
 def checkLinesFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
@@ -42,7 +45,7 @@ def checkLinesFromFile(dir, filename) :
         Current_route_points = []
         Current_route_id = -1
         Current_route_intersect = False
-        for chunk in read_in_chunks(f, 2048) :
+        for chunk in f:
             for p in filter(None, chunk.split('\n')) :
                 if Current_route_id == -1 :
                     columns = p.split(',')
@@ -63,9 +66,11 @@ def checkLinesFromFile(dir, filename) :
                                     #Add new point to points list
                                     Current_route_points.append(newPoint)
                                     continue
-                                except :
+                                except Exception as e:
+                                    print(str(e))
                                     # print("point {} of route {} cannot be converted to point".format(point[-1], Current_route_id))
                                     continue
+                        # NEW ROUTE
                         #set the new Current route id
                         if len(Current_route_points) > 0 :
                             All_routes[Current_route_id] = Current_route_points
@@ -77,8 +82,10 @@ def checkLinesFromFile(dir, filename) :
                         try:
                             pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
                             if chechPointWithinPolygonList(pointCheck, JERUSALEM) :
-                                Current_route_points.append(newPoint)
-                        except :
+                                Current_route_points.append(pointCheck)
+                                Current_route_intersect = True
+                        except Exception as e:
+                            print(str(e))
                             # print("point {} of route {} cannot be converted to point".format(point[-1], Current_route_id))
                             continue
 
@@ -86,6 +93,7 @@ def checkLinesFromFile(dir, filename) :
                         i += 1
                         continue
         print (i)
-        print(All_routes)
+        print(len(All_routes))
 #
 # checkLinesFromFile('download/israel-public-transportation', 'shapes.txt')
+# checkPointsFromFile('download/israel-public-transportation', 'stops.txt')
