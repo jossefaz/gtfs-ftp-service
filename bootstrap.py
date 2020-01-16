@@ -1,4 +1,3 @@
-#-*- coding: UTF-8 -*-
 from Configuration.config import Config
 import logging
 from logger.boot import setupLogging
@@ -18,8 +17,6 @@ if __name__ == '__main__' :
             download_dir = config.get_property("WS").get("DOWNLOAD").get(dom)
             for file in config.get_property("FILES").get(dom) :
                 ftp.downloadFileItem(file, outDir=download_dir)
-                ls = os.listdir()
-                print(ls)
                 with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
                     zip_ref.extractall(os.path.join(download_dir, file[:-4]))
                 checkPointsFromFile(os.path.join( download_dir, file[:-4]), 'stops.txt')

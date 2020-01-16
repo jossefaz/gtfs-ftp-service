@@ -1,5 +1,4 @@
 from shapely.geometry import Point
-from utils.file import read_in_chunks
 from utils.geometry import *
 from utils.control import timing
 from utils.path import *
@@ -11,7 +10,7 @@ import os
 def checkPointsFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
-    with open(workFile, encoding='utf-8') as f :
+    with open(workFile) as f :
         all_points = {}
         i = -1
         for chunk in f:
