@@ -36,6 +36,7 @@ class FtpLoader(baseClass):
         self.ptr = None
         self.max_attempts = 15
         self.waiting = True
+        self.cwd = os.getcwd()
 
 
     def setClassLogger(self):
@@ -90,10 +91,12 @@ class FtpLoader(baseClass):
             return False
         self.waiting = False
         if outDir is not None:
+
             downdir = os.path.join(GetParentDir(os.path.dirname(__file__)), outDir)
             os.chdir(downdir)
         res = self.ftp.retrbinary('RETR %s' % filename, filePtr.write) if filePtr.tell() == 0 else \
             self.ftp.retrbinary('RETR %s' % filename, filePtr.write, rest=filePtr.tell())
+        os.chdir(self.cwd)
         return res
 
     def downloadFileItem(self, dst_filename, outDir = None):
