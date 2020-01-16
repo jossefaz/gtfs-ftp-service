@@ -12,7 +12,4 @@ RUN pip install -r requirements.txt
 # Run the application:
 WORKDIR /app
 COPY . .
-RUN ls
-RUN cd Model
-RUN ls
-CMD ["python", "geoCsv.py"]
+CMD ["python", "bootstrap.py", "DEV"]

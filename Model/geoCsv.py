@@ -26,4 +26,3 @@ def mainGeo() :
         print(listofPoitn)
 
 
-mainGeo()
