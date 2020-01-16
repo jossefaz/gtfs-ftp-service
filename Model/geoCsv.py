@@ -27,7 +27,7 @@ def checkPointsFromFile(dir, filename) :
                     pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
                     if chechPointWithinPolygonList(pointCheck, JERUSALEM) :
                         all_points[point[id_index]] = [p, pointCheck.wkt]
-
+                #Commentaire
                 except :
                     continue
         print(len(all_points))
