@@ -61,10 +61,14 @@ def checkLinesFromFile(dir, filename) :
                                 # try to convert to Point :
                                 try :
                                     newPoint = Point(float(point[lat_index]), float(point[lon_index]))
+                                    #Add new point to points list
                                     Current_route_points.append(newPoint)
+                                    continue
                                 except :
                                     print("point {} of route {} cannot be converted to point".format(point[-1], Current_route_id))
-                                pass
+                                    continue
+                        #set the new Current route id
+                        Current_route_id = point[id_index]
 
 
 
