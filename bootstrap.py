@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*-
 from Configuration.config import Config
 import logging
 from logger.boot import setupLogging

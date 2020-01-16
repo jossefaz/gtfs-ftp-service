@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*-
 from shapely.geometry import Point
 from utils.geometry import *
 from utils.control import timing
@@ -10,7 +11,7 @@ import os
 def checkPointsFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
-    with open(workFile) as f :
+    with open(workFile, encoding='utf-8') as f :
         all_points = {}
         i = -1
         for chunk in f:
@@ -35,7 +36,7 @@ def checkPointsFromFile(dir, filename) :
 def checkLinesFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
-    with open(workFile) as f :
+    with open(workFile, encoding='utf-8') as f :
         All_routes = {}
         i = 0
         id_index = 0
