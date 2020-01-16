@@ -56,9 +56,17 @@ def checkLinesFromFile(dir, filename) :
                         point = p.split(',')
                         #Check if aleready loop on this id
                         if point[id_index] == Current_route_id :
-                            # Check if
+                            # Check if poitn intersect
                             if Current_route_intersect :
+                                # try to convert to Point :
+                                try :
+                                    newPoint = Point(float(point[lat_index]), float(point[lon_index]))
+                                    Current_route_points.append(newPoint)
+                                except :
+                                    print("point {} of route {} cannot be converted to point".format(point[-1], Current_route_id))
                                 pass
+
+
 
 
                         Current_route_id = point[id_index]
