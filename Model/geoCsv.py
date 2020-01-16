@@ -31,7 +31,7 @@ def checkPointsFromFile(dir, filename) :
                 except :
                     continue
         print(len(all_points))
-        print(all_points)
+
 @timing
 def checkLinesFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
