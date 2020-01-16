@@ -2,12 +2,15 @@ from shapely.geometry import Point
 from utils.file import read_in_chunks
 from utils.geometry import *
 from utils.control import timing
+from utils.path import *
+import os
 JERUSALEM = getJerusalemBorder()
 
 
 @timing
 def mainGeo() :
-    with open('/home/louis6/Documents/ness/MOT/mot_py/download/israel-public-transportation/stops.txt') as f :
+    workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), 'stops.txt')
+    with open(workFile) as f :
         listofPoitn = []
         i = 0
         j = 0
