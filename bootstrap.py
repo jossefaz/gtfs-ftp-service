@@ -33,7 +33,11 @@ if __name__ == '__main__' :
                             if isinstance( fileConfig, ftp_file):
                                 geofilter = GeoFilter(f.get('GEO_MASK'), download_dir, f.get('NAME'), f.get('GEO_TYPE'), f.get('FILTER_TYPE'))
                                 results = geofilter.exec()
-                                print(len(results))
+                                if results is not None :
+                                    print(len(results))
+                                else :
+                                    logger.error("an error occured, check logs")
+                                    continue
                             else :
                                 logger.error(fileConfig)
                                 continue
