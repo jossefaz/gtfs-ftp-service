@@ -5,7 +5,7 @@ reg_controller = {
             "line": checkLinesFromFile,
             "point": checkPointsFromFile
         },
-        "geoMask" : {
+        "AOI" : {
             "JERUSALEM" : getJerusalemBorder
         },
         "geoAction" : {

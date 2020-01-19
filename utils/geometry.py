@@ -29,7 +29,7 @@ def getJerusalemBorder() :
     project = getTransformer(israel_tm_grid, wgs84)
     jerusalem_polygon = []
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), 'ressource/border2.csv')
-    polylist = list(csv.reader(open(workFile, "rU"), delimiter='|'))
+    polylist = list(csv.reader(open(workFile, 'r'), delimiter='|'))
     for geom in polylist[0]:
         polygon = shapely.wkt.loads(geom)
         converted = transform(project, polygon)
@@ -41,7 +41,7 @@ if __name__ == '__main__' :
 
 
 @timing
-def checkPointsFromFile(workFile, geoMask, filterType) :
+def checkPointsFromFile(workFile, AOI, filterType) :
     with open(workFile, encoding='utf-8') as f :
         all_points = {}
         i = -1
@@ -56,7 +56,7 @@ def checkPointsFromFile(workFile, geoMask, filterType) :
                 try:
                     point = p.split(',')
                     pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
-                    if checkPointPolygonList(pointCheck, geoMask, filterType) :
+                    if checkPointPolygonList(pointCheck, AOI, filterType) :
                         all_points[point[id_index]] = [p, pointCheck.wkt]
                 #Commentaire
                 except :
@@ -64,7 +64,7 @@ def checkPointsFromFile(workFile, geoMask, filterType) :
         return all_points
 
 @timing
-def checkLinesFromFile(workFile, geoMask, filterType):
+def checkLinesFromFile(workFile, AOI, filterType):
     '''
 
     :param workFile:  Must be ordered by route_id
@@ -118,7 +118,7 @@ def checkLinesFromFile(workFile, geoMask, filterType):
                         #try to conver to Point :
                         try:
                             pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
-                            if checkPointPolygonList(pointCheck, geoMask, filterType) :
+                            if checkPointPolygonList(pointCheck, AOI, filterType) :
                                 Current_route_points.append(pointCheck)
                                 Current_route_intersect = True
                         except Exception as e:

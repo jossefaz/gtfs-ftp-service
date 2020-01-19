@@ -31,8 +31,8 @@ if __name__ == '__main__' :
                         for f in props :
                             fileConfig = buildFtpFile(f)
                             if isinstance( fileConfig, ftp_file):
-                                geofilter = GeoFilter(f.get('GEO_MASK'), download_dir, f.get('NAME'), f.get('GEO_TYPE'), f.get('FILTER_TYPE'))
-                                results = geofilter.exec()
+                                geo_filter = GeoFilter(filter_name=fileConfig.AOI, dir=download_dir,filename=fileConfig.NAME, geometry=fileConfig.GEO_TYPE, filter_type=fileConfig.FILTER_TYPE)
+                                results = geo_filter.exec()
                                 if results is not None :
                                     print(len(results))
                                 else :
