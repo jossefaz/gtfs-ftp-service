@@ -94,6 +94,6 @@ def checkLinesFromFile(dir, filename) :
                         continue
         print (i)
         print(len(All_routes))
-#
-checkLinesFromFile('download/israel-public-transportation', 'shapes.txt')
-# checkPointsFromFile('download/israel-public-transportation', 'stops.txt')
+if __name__ == '__main__' :
+    checkLinesFromFile('download/israel-public-transportation', 'shapes.txt')
+    checkPointsFromFile('download/israel-public-transportation', 'stops.txt')

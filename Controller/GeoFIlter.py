@@ -1,6 +1,5 @@
 #-*- coding: UTF-8 -*-
 from Template.BaseClass import baseClass
-from shapely.geometry import Point
 from utils.geometry import *
 from utils.control import timing
 from utils.path import *
@@ -10,13 +9,15 @@ from Controller.registry import reg_controller
 
 
 class GeoFilter(baseClass) :
-    __slots__ = ["filter", "registry", "file_path"]
+    __slots__ = ["filter", "registry", "file_path", "logger", "geometry"]
 
-    def __init__(self, filtername, dir, filename):
+    def __init__(self, filtername, dir, filename, geometry, filtertype):
         self.logger = logging.getLogger(__name__)
         self.registry = reg_controller[self.__class__.__name__]
         self.filter = self.registry.get('filters')[filtername]()
         self.file_path = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
+        self.geometry = self.registry.get('geometry')[geometry]
+
 
     def exec(self):
         pass
