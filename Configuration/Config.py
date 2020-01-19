@@ -16,12 +16,11 @@ configFiles = {
 class Config(baseClass):
 
     def __init__(self):
-        self.setClassLogger()
+        self.logger = logging.getLogger(__name__)
         self._config = self.load_config()
 
-    def setClassLogger(self):
-        self.logger = logging.getLogger(__name__)
-        
+    def exec(self):
+        pass
     def load_config(self) :
         if configFiles.get(sys.argv[1]) is None :
             self.logger.error(configFiles.get("NOT_FOUND"))
@@ -32,9 +31,8 @@ class Config(baseClass):
                              failonmissingfiles=True)
         return conf
 
-
     def get_property(self, property_name):
         if property_name not in self._config.keys(): 
             return None
         return self._config[property_name]
-    
+

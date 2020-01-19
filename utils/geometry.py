@@ -12,10 +12,14 @@ def chechPointWithinPolygon(point, polygon) :
     return point.within(polygon)
 
 
-def chechPointWithinPolygonList(point, polygonList) :
+def checkPointPolygonList(point, polygonList, filtertype) :
+    check = False
     for poly in polygonList:
         if point.within(poly) :
-            return True
+            check = True if filtertype == 'within' else False
+        else :
+            check = False if filtertype == 'within' else True
+    return check
 
 def getTransformer(fromCRS, toCRS):
     project = partial(pyproj.transform,fromCRS, toCRS)
@@ -52,7 +56,7 @@ def checkPointsFromFile(workFile, geoMask, filterType) :
                 try:
                     point = p.split(',')
                     pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
-                    if chechPointWithinPolygonList(pointCheck, geoMask) :
+                    if checkPointPolygonList(pointCheck, geoMask, filterType) :
                         all_points[point[id_index]] = [p, pointCheck.wkt]
                 #Commentaire
                 except :
@@ -61,6 +65,13 @@ def checkPointsFromFile(workFile, geoMask, filterType) :
 
 @timing
 def checkLinesFromFile(workFile, geoMask, filterType):
+    '''
+
+    :param workFile:  Must be ordered by route_id
+    :param geoMask:
+    :param filterType:
+    :return:
+    '''
     with open(workFile, encoding='utf-8') as f :
         All_routes = {}
         i = 0
@@ -83,6 +94,7 @@ def checkLinesFromFile(workFile, geoMask, filterType):
                         point = p.split(',')
                         #Check if aleready loop on this id
                         if point[id_index] == Current_route_id :
+
                             # Check if poitn intersect
                             if Current_route_intersect :
                                 # try to convert to Point :
@@ -106,7 +118,7 @@ def checkLinesFromFile(workFile, geoMask, filterType):
                         #try to conver to Point :
                         try:
                             pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
-                            if chechPointWithinPolygonList(pointCheck, geoMask) :
+                            if checkPointPolygonList(pointCheck, geoMask, filterType) :
                                 Current_route_points.append(pointCheck)
                                 Current_route_intersect = True
                         except Exception as e:
@@ -117,5 +129,4 @@ def checkLinesFromFile(workFile, geoMask, filterType):
                     except :
                         i += 1
                         continue
-        print (i)
-        print(len(All_routes))
+        return All_routes

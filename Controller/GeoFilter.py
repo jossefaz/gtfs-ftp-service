@@ -12,14 +12,12 @@ class GeoFilter(baseClass) :
     def __init__(self, filtername, dir, filename, geometry, filtertype):
         self.logger = logging.getLogger(__name__)
         self.registry = reg_controller[self.__class__.__name__]
-        self.geoMask = self.registry.get('geoMask').get(filtername, None)
+        self.geoMask = self.registry.get('geoMask').get(filtername, None) #TODO : rename mask to areaofinterest
         self.current = self.registry.get('geometry').get(geometry, None)
         self.filterType = self.registry.get('geoAction').get(filtertype, None)
         self.file_path = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
 
-
-
-    def exec(self):
+    def exec(self, arg=None, cb=None):
         try :
             if self.geoMask is None :
                 raise ValueError("the filter you specified in config.yaml does not exist in the registry, check mispelling. It must be one of these : {}".format(u' , '.join(self.registry.get('geoMask').keys())))
@@ -28,8 +26,10 @@ class GeoFilter(baseClass) :
             if self.filterType is None :
                 raise ValueError("the action you specified in config.yaml does not exist in the registry, check mispelling. It must be one of these : {}".format(u' , '.join(self.registry.get('geoAction').keys())))
             self.geoMask = self.geoMask()
-            return self.current(self.file_path,self. geoMask, self.filterType)
-
+            result =  self.current(self.file_path,self. geoMask, self.filterType)
+            if (cb is not None) :
+                result = cb(result)
+            return result
 
 
         except ValueError as e:
@@ -38,11 +38,5 @@ class GeoFilter(baseClass) :
         except Exception as e :
             self.logger.error(str(e))
 
-
-        pass
-
-if __name__ == '__main__' :
-    test = GeoFilter('JERUSALEM', 'download/israel-public-transportation', 'shapes.txt', 'line', 'within')
-    test.exec()
 
 

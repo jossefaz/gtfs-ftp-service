@@ -10,7 +10,7 @@ class baseClass(metaclass=ABCMeta):
     def logger(self):
         pass
     @abstractmethod
-    def exec(self, arg):
+    def exec(self, arg, cb):
         pass
 
 
