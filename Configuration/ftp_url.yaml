@@ -1,6 +1,17 @@
 URL :
   - MOT : gtfs.mot.gov.il
+  - MOH : sdsdsds
 
 FILES :
   MOT :
-    - israel-public-transportation.zip
+    israel-public-transportation.zip :
+        - NAME : stops.txt
+          GEO_TYPE : point
+          GEO_MASK : JERUSALEM
+          FILTER_TYPE : within
+
+        - NAME : shapes.txt
+          GEO_TYPE: line
+          GEO_MASK: JERUSALEM
+          FILTER_TYPE : within
+

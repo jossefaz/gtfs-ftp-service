@@ -1,6 +1,8 @@
 #-*- coding: UTF-8 -*-
-from Configuration.config import Config
+from Configuration.Config import Config
 import logging
+
+from Controller.GeoFilter import GeoFilter
 from logger.boot import setupLogging
 from Controller.FtpLoader import FtpLoader
 from Model.geoCsv import *
@@ -14,12 +16,22 @@ if __name__ == '__main__' :
     urls = config.get_property("URL")
     for domain in urls :
         for dom, url in domain.items() :
-            ftp = FtpLoader(url)
             download_dir = config.get_property("WS").get("DOWNLOAD").get(dom)
-            for file in config.get_property("FILES").get(dom) :
-                ftp.downloadFileItem(file, outDir=download_dir)
-                ls = os.listdir()
-                print(ls)
-                with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
-                    zip_ref.extractall(os.path.join(download_dir, file[:-4]))
-                checkPointsFromFile(os.path.join( download_dir, file[:-4]), 'stops.txt')
+            ftp = FtpLoader(url, outDir=download_dir)
+            dict_files = config.get_property("FILES").get(dom)
+            for file, props in dict_files.items() :
+                downloaded = ftp.downloadFileItem(file)
+                if downloaded :
+                    if file.endswith('.zip') :
+                        with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
+                            zip_ref.extractall(download_dir)
+                    for f in props :
+                        geofilter = GeoFilter(f.get('GEO_MASK'), download_dir, f.get('NAME'), f.get('GEO_TYPE'), f.get('FILTER_TYPE'))
+                        results = geofilter.exec()
+                        print(len(results))
+
+                else :
+                    logger.error("Error occured while downloadind the file {}. Check logs".format(file))
+                    continue
+
+

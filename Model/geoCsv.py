@@ -1,5 +1,5 @@
+#-*- coding: UTF-8 -*-
 from shapely.geometry import Point
-from utils.file import read_in_chunks
 from utils.geometry import *
 from utils.control import timing
 from utils.path import *
@@ -27,16 +27,20 @@ def checkPointsFromFile(dir, filename) :
                     pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
                     if chechPointWithinPolygonList(pointCheck, JERUSALEM) :
                         all_points[point[id_index]] = [p, pointCheck.wkt]
+<<<<<<< HEAD
                 #commentaire
+=======
+                #Commentaire
+>>>>>>> 9503557d0a3a26327e53f7b6f27088d6645f88cd
                 except :
                     continue
         print(len(all_points))
-        print(all_points)
+
 @timing
 def checkLinesFromFile(dir, filename) :
     JERUSALEM = getJerusalemBorder()
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
-    with open(workFile) as f :
+    with open(workFile, encoding='utf-8') as f :
         All_routes = {}
         i = 0
         id_index = 0
@@ -94,6 +98,6 @@ def checkLinesFromFile(dir, filename) :
                         continue
         print (i)
         print(len(All_routes))
-#
-# checkLinesFromFile('download/israel-public-transportation', 'shapes.txt')
-# checkPointsFromFile('download/israel-public-transportation', 'stops.txt')
+if __name__ == '__main__' :
+    checkLinesFromFile('download/israel-public-transportation', 'shapes.txt')
+    checkPointsFromFile('download/israel-public-transportation', 'stops.txt')
