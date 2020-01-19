@@ -1,12 +1,13 @@
 #-*- coding: UTF-8 -*-
 from Configuration.Config import Config
 import logging
-
+import os
 from Controller.GeoFilter import GeoFilter
 from logger.boot import setupLogging
 from Controller.FtpLoader import FtpLoader
-from Model.geoCsv import *
+from Template.data_struct import buildFtpFile, ftp_file
 import zipfile
+
 
 if __name__ == '__main__' :
 
@@ -21,15 +22,21 @@ if __name__ == '__main__' :
                 download_dir = config.get_property("WS").get("DOWNLOAD").get(dom)
                 ftp = FtpLoader(url, outDir=download_dir)
                 for file, props in dict_files.items() :
+
                     downloaded = ftp.downloadFileItem(file)
                     if downloaded :
                         if file.endswith('.zip') :
                             with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
                                 zip_ref.extractall(download_dir)
                         for f in props :
-                            geofilter = GeoFilter(f.get('GEO_MASK'), download_dir, f.get('NAME'), f.get('GEO_TYPE'), f.get('FILTER_TYPE'))
-                            results = geofilter.exec()
-                            print(len(results))
+                            fileConfig = buildFtpFile(f)
+                            if isinstance( fileConfig, ftp_file):
+                                geofilter = GeoFilter(f.get('GEO_MASK'), download_dir, f.get('NAME'), f.get('GEO_TYPE'), f.get('FILTER_TYPE'))
+                                results = geofilter.exec()
+                                print(len(results))
+                            else :
+                                logger.error(fileConfig)
+                                continue
 
                     else :
                         logger.error("Error occured while downloadind the file {}. Check logs".format(file))

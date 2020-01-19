@@ -7,11 +7,11 @@ FILES :
     israel-public-transportation.zip :
         - NAME : stops.txt
           GEO_TYPE : point
-          GEO_MASK : JERUSALEM
+          AOI : JERUSALEM
           FILTER_TYPE : within
 
         - NAME : shapes.txt
           GEO_TYPE: line
-          GEO_MASK: JERUSALEM
+          AOI: JERUSALEM
           FILTER_TYPE : within
 
