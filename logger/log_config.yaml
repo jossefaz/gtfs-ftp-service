@@ -103,7 +103,12 @@ loggers:
         handlers: [info_file_handler, error_file_handler, critical_file_handler, debug_file_handler, warn_file_handler]
         propogate: no
 
-    Factory.FtpLoader:
+    Controller.FtpLoader:
+        level: DEBUG
+        handlers: [info_file_handler, error_file_handler, critical_file_handler, debug_file_handler, warn_file_handler]
+        propogate: no
+
+    Controller.GeoFilter:
         level: DEBUG
         handlers: [info_file_handler, error_file_handler, critical_file_handler, debug_file_handler, warn_file_handler]
         propogate: no

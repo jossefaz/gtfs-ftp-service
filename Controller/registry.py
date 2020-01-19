@@ -5,9 +5,16 @@ reg_controller = {
             "line": checkLinesFromFile,
             "point": checkPointsFromFile
         },
-        "filters" : {
+        "geoMask" : {
             "JERUSALEM" : getJerusalemBorder
+        },
+        "geoAction" : {
+            "within" : "within",
+            "outbound" : "outbound"
         }
+
+
+
 
 
     }

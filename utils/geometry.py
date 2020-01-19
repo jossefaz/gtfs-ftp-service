@@ -35,10 +35,9 @@ def getJerusalemBorder() :
 if __name__ == '__main__' :
     getJerusalemBorder()
 
+
 @timing
-def checkPointsFromFile(dir, filename) :
-    JERUSALEM = getJerusalemBorder()
-    workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
+def checkPointsFromFile(workFile, geoMask, filterType) :
     with open(workFile, encoding='utf-8') as f :
         all_points = {}
         i = -1
@@ -53,17 +52,15 @@ def checkPointsFromFile(dir, filename) :
                 try:
                     point = p.split(',')
                     pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
-                    if chechPointWithinPolygonList(pointCheck, JERUSALEM) :
+                    if chechPointWithinPolygonList(pointCheck, geoMask) :
                         all_points[point[id_index]] = [p, pointCheck.wkt]
                 #Commentaire
                 except :
                     continue
-        print(len(all_points))
+        return all_points
 
 @timing
-def checkLinesFromFile(dir, filename) :
-    JERUSALEM = getJerusalemBorder()
-    workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
+def checkLinesFromFile(workFile, geoMask, filterType):
     with open(workFile, encoding='utf-8') as f :
         All_routes = {}
         i = 0
@@ -109,7 +106,7 @@ def checkLinesFromFile(dir, filename) :
                         #try to conver to Point :
                         try:
                             pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
-                            if chechPointWithinPolygonList(pointCheck, JERUSALEM) :
+                            if chechPointWithinPolygonList(pointCheck, geoMask) :
                                 Current_route_points.append(pointCheck)
                                 Current_route_intersect = True
                         except Exception as e:
