@@ -27,20 +27,24 @@ def setInterval(interval, times = -1):
 MONITOR_INTERVAL = 30
 class FtpLoader(baseClass):
 
-    __slots__ = ['host', 'port', 'ftp', 'ptr', 'max_attempts', 'waiting', 'logger']
+    __slots__ = ['host', 'port', 'ftp', 'ptr', 'max_attempts', 'waiting', 'logger','outDir']
 
-    def __init__(self, host, port=21):
-        self.setClassLogger()
+    def __init__(self, host, port=21, outDir = None):
+        self.logger = logging.getLogger(__name__)
         self.host = host
         self.port = port
         self.ptr = None
         self.max_attempts = 15
         self.waiting = True
         self.cwd = os.getcwd()
+        self.outDir = outDir
 
 
-    def setClassLogger(self):
-        self.logger = logging.getLogger(__name__)
+    def exec(self, dst_filename, cb=None):
+        self.downloadFileItem(dst_filename)
+        if cb is not None :
+            cb()
+
 
     def connect(self):
         ftp = FTP()
@@ -99,11 +103,11 @@ class FtpLoader(baseClass):
         os.chdir(self.cwd)
         return res
 
-    def downloadFileItem(self, dst_filename, outDir = None):
+    def downloadFileItem(self, dst_filename):
 
         local_filename = dst_filename
-        if outDir is not None:
-            checkPath = os.path.join(GetParentDir(os.path.dirname(__file__)), outDir)
+        if self.outDir is not None:
+            checkPath = os.path.join(GetParentDir(os.path.dirname(__file__)), self.outDir)
             safeOpen(checkPath)
             local_filename = os.path.join(checkPath, local_filename)
         try:
@@ -118,7 +122,7 @@ class FtpLoader(baseClass):
                     downloaded = ''
                     while dst_filesize > filePtr.tell():
                         try:
-                            downloaded = self.openDlStream(outDir, filePtr, dst_filename)
+                            downloaded = self.openDlStream(self.outDir, filePtr, dst_filename)
                             if downloaded is None :
                                 break
                         except:

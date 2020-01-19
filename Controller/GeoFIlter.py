@@ -1,11 +1,28 @@
 #-*- coding: UTF-8 -*-
+from Template.BaseClass import baseClass
 from shapely.geometry import Point
 from utils.geometry import *
 from utils.control import timing
 from utils.path import *
 import os
+import logging
+from Controller.registry import reg_controller
 
 
+class GeoFilter(baseClass) :
+    __slots__ = ["filter", "registry", "file_path"]
+
+    def __init__(self, filtername, dir, filename):
+        self.logger = logging.getLogger(__name__)
+        self.registry = reg_controller[self.__class__.__name__]
+        self.filter = self.registry.get('filters')[filtername]()
+        self.file_path = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
+
+    def exec(self):
+        pass
+
+if __name__ == '__main__' :
+    test = GeoFilter('JERUSALEM', 'download', 'shapes.txt')
 
 @timing
 def checkPointsFromFile(dir, filename) :
@@ -95,5 +112,5 @@ def checkLinesFromFile(dir, filename) :
         print (i)
         print(len(All_routes))
 #
-checkLinesFromFile('download/israel-public-transportation', 'shapes.txt')
+# checkLinesFromFile('download/israel-public-transportation', 'shapes.txt')
 # checkPointsFromFile('download/israel-public-transportation', 'stops.txt')

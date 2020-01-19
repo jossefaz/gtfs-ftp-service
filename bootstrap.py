@@ -1,5 +1,5 @@
 #-*- coding: UTF-8 -*-
-from Configuration.config import Config
+from Configuration.Config import Config
 import logging
 from logger.boot import setupLogging
 from Controller.FtpLoader import FtpLoader
