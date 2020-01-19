@@ -1,6 +1,6 @@
 from Template.BaseClass import baseClass
 from utils.path import *
-import threading
+from utils.control import setInterval
 import logging
 from ftplib import FTP, error_perm
 
@@ -8,22 +8,7 @@ import socket
 import time
 import os
 
-def setInterval(interval, times = -1):
-    def outer_wrap(function):
-        def wrap(*args, **kwargs):
-            stop = threading.Event()
-            def inner_wrap():
-                i = 0
-                while i != times and not stop.isSet():
-                    stop.wait(interval)
-                    function(*args, **kwargs)
-                    i += 1
-            t = threading.Timer(0, inner_wrap)
-            t.daemon = True
-            t.start()
-            return stop
-        return wrap
-    return outer_wrap
+
 
 MONITOR_INTERVAL = 30
 class FtpLoader(baseClass):
@@ -40,12 +25,10 @@ class FtpLoader(baseClass):
         self.cwd = os.getcwd()
         self.outDir = outDir
 
-
     def exec(self, dst_filename, cb=None):
         self.downloadFileItem(dst_filename)
         if cb is not None :
             cb()
-
 
     def connect(self):
         ftp = FTP()

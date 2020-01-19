@@ -16,22 +16,26 @@ if __name__ == '__main__' :
     urls = config.get_property("URL")
     for domain in urls :
         for dom, url in domain.items() :
-            download_dir = config.get_property("WS").get("DOWNLOAD").get(dom)
-            ftp = FtpLoader(url, outDir=download_dir)
             dict_files = config.get_property("FILES").get(dom)
-            for file, props in dict_files.items() :
-                downloaded = ftp.downloadFileItem(file)
-                if downloaded :
-                    if file.endswith('.zip') :
-                        with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
-                            zip_ref.extractall(download_dir)
-                    for f in props :
-                        geofilter = GeoFilter(f.get('GEO_MASK'), download_dir, f.get('NAME'), f.get('GEO_TYPE'), f.get('FILTER_TYPE'))
-                        results = geofilter.exec()
-                        print(len(results))
+            if dict_files is not None :
+                download_dir = config.get_property("WS").get("DOWNLOAD").get(dom)
+                ftp = FtpLoader(url, outDir=download_dir)
+                for file, props in dict_files.items() :
+                    downloaded = ftp.downloadFileItem(file)
+                    if downloaded :
+                        if file.endswith('.zip') :
+                            with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
+                                zip_ref.extractall(download_dir)
+                        for f in props :
+                            geofilter = GeoFilter(f.get('GEO_MASK'), download_dir, f.get('NAME'), f.get('GEO_TYPE'), f.get('FILTER_TYPE'))
+                            results = geofilter.exec()
+                            print(len(results))
 
-                else :
-                    logger.error("Error occured while downloadind the file {}. Check logs".format(file))
-                    continue
+                    else :
+                        logger.error("Error occured while downloadind the file {}. Check logs".format(file))
+                        continue
+            else :
+                logger.error("Error occured while trying to access the file list of domain {}. Check if you wrote a file list for this domain in the ftp_url.yaml config file".format(dom))
+                continue
 
 
