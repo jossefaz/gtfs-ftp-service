@@ -4,6 +4,7 @@ from utils.path import *
 import os
 import logging
 from registry.controller import registry
+from inspect import signature
 
 
 class GeoFilter(baseClass) :
@@ -28,8 +29,13 @@ class GeoFilter(baseClass) :
                 raise ValueError("the action you specified in config.yaml does not exist in the registry, check mispelling. It must be one of these : {}".format(u' , '.join(self.registry.get('geoAction').keys())))
             self.AOI = self.AOI()
             result =  self.current(self.file_path,self. AOI, self.filterType)
-            if (cb is not None) :
-                result = cb(result)
+            if cb is not None:
+                callBack = self.registry.get(cb, None)
+                if callBack is None :
+                    self.logger.warning('the callback {} was not found in the registry, please check mispelling'.format(callBack))
+                    return result
+                sign = signature(callBack)
+                result = callBack(result)
             return result
 
 

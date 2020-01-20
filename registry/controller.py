@@ -1,4 +1,5 @@
 from utils.geometry import getJerusalemBorder, checkPointsFromFile, checkLinesFromFile
+from Controller.Feeder import Feeder
 registry = {
     "GeoFilter" : {
         "geometry" : {
@@ -13,7 +14,7 @@ registry = {
             "outbound" : "outbound"
         },
         "callbacks" : {
-            "feedData" : "feedData"
+            "feedData" : Feeder
         }
 
     },

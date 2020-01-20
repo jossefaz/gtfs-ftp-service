@@ -8,6 +8,10 @@ from Controller.FtpLoader import FtpLoader
 from utils.builders import buildFtpGeoFile, ftp_geo_file
 import zipfile
 
+def execute(instance, cb=None) :
+    if cb is not None:
+        return instance.exec(arg=f.get('CB', None), cb=f.get('CB').get('NAME'))
+    return instance.exec()
 
 if __name__ == '__main__' :
 
@@ -29,18 +33,21 @@ if __name__ == '__main__' :
                             with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
                                 zip_ref.extractall(download_dir)
                         for f in props :
-                            fileConfig = buildFtpGeoFile(f)
-                            if isinstance( fileConfig, ftp_geo_file):
-                                geo_filter = GeoFilter(filter_name=fileConfig.AOI, dir=download_dir,filename=fileConfig.NAME, geometry=fileConfig.GEO_TYPE, filter_type=fileConfig.FILTER_TYPE)
-                                results = geo_filter.exec(cb=fileConfig.CB)
-                                if results is not None :
-                                    print(len(results))
-                                else :
-                                    logger.error("an error occured, check logs")
-                                    continue
-                            else :
-                                logger.error(fileConfig)
-                                continue
+                            fType = f.get('FILE_TYPE')
+                            if fType is not None :
+                                if fType == 'GEO' :
+                                    fileConfig = buildFtpGeoFile(f)
+                                    if isinstance( fileConfig, ftp_geo_file):
+                                        geo_filter = GeoFilter(filter_name=fileConfig.AOI, dir=download_dir,filename=fileConfig.NAME, geometry=fileConfig.GEO_TYPE, filter_type=fileConfig.FILTER_TYPE)
+                                        results = execute(geo_filter, f.get('CB', None))
+                                        if results is not None :
+                                            print(len(results))
+                                        else :
+                                            logger.error("an error occured, check logs")
+                                            continue
+                                    else :
+                                        logger.error(fileConfig)
+                                        continue
 
                     else :
                         logger.error("Error occured while downloadind the file {}. Check logs".format(file))
