@@ -1,5 +1,5 @@
 from utils.geometry import getJerusalemBorder, checkPointsFromFile, checkLinesFromFile
-reg_controller = {
+registry = {
     "GeoFilter" : {
         "geometry" : {
             "line": checkLinesFromFile,
@@ -11,11 +11,16 @@ reg_controller = {
         "geoAction" : {
             "within" : "within",
             "outbound" : "outbound"
+        },
+        "callbacks" : {
+            "feedData" : "feedData"
         }
 
-
-
-
-
+    },
+    "Feeder" : {
+        "callbacks" : {
+            "concatenate_field" : "concatenate_field"
+        }
     }
+
 }

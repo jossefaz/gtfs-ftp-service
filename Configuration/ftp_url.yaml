@@ -6,12 +6,40 @@ FILES :
   MOT :
     israel-public-transportation.zip :
         - NAME : stops.txt
+          FILE_TYPE : GEO
           GEO_TYPE : point
           AOI : JERUSALEM
           FILTER_TYPE : within
 
+
+
         - NAME : shapes.txt
+          FILE_TYPE : GEO
           GEO_TYPE: line
           AOI: JERUSALEM
           FILTER_TYPE : within
+          CB:
+            - NAME: feedData
+              TABLES :
+                - NAME : trips.txt
+                  JOIN_FIELD : shape_id
+                  FOOD_FIELDS :
+                    - route_id
+                    - service_id
+                    - trip_id
+                    - trip_headsign
+                    - direction_id
+
+                - NAME : routes.txt
+                  JOIN_FIELD : shape_id
+                  FOOD_FIELDS :
+                    - route_id
+                    - agency_id
+                    - route_short_name
+                    - route_long_name
+                    - route_desc
+                    - route_type
+                    - route_color
+
+
 

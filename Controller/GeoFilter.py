@@ -1,17 +1,18 @@
-#-*- coding: UTF-8 -*-
+# -*- coding: UTF-8 -*-
 from Template.BaseClass import baseClass
 from utils.path import *
 import os
 import logging
-from Controller.registry import reg_controller
+from registry.controller import registry
 
 
 class GeoFilter(baseClass) :
+
     __slots__ = ["AOI", "registry", "file_path", "logger", "filterType"]
 
     def __init__(self, filter_name, dir, filename, geometry, filter_type):
         self.logger = logging.getLogger(__name__)
-        self.registry = reg_controller[self.__class__.__name__]
+        self.registry = registry[self.__class__.__name__]
         self.AOI = self.registry.get('AOI').get(filter_name, None) #TODO : rename mask to areaofinterest
         self.current = self.registry.get('geometry').get(geometry, None)
         self.filterType = self.registry.get('geoAction').get(filter_type, None)

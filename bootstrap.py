@@ -5,7 +5,7 @@ import os
 from Controller.GeoFilter import GeoFilter
 from logger.boot import setupLogging
 from Controller.FtpLoader import FtpLoader
-from Template.data_struct import buildFtpFile, ftp_file
+from utils.builders import buildFtpGeoFile, ftp_geo_file
 import zipfile
 
 
@@ -29,10 +29,10 @@ if __name__ == '__main__' :
                             with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
                                 zip_ref.extractall(download_dir)
                         for f in props :
-                            fileConfig = buildFtpFile(f)
-                            if isinstance( fileConfig, ftp_file):
+                            fileConfig = buildFtpGeoFile(f)
+                            if isinstance( fileConfig, ftp_geo_file):
                                 geo_filter = GeoFilter(filter_name=fileConfig.AOI, dir=download_dir,filename=fileConfig.NAME, geometry=fileConfig.GEO_TYPE, filter_type=fileConfig.FILTER_TYPE)
-                                results = geo_filter.exec()
+                                results = geo_filter.exec(cb=fileConfig.CB)
                                 if results is not None :
                                     print(len(results))
                                 else :
