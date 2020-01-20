@@ -10,7 +10,7 @@ import zipfile
 
 def execute(instance, cb=None) :
     if cb is not None:
-        return instance.exec(arg=f.get('CB', None), cb=f.get('CB').get('NAME'))
+        return instance.exec(arg=cb[0], cb=cb[0].get('NAME'))
     return instance.exec()
 
 if __name__ == '__main__' :
@@ -27,8 +27,8 @@ if __name__ == '__main__' :
                 ftp = FtpLoader(url, outDir=download_dir)
                 for file, props in dict_files.items() :
 
-                    downloaded = ftp.downloadFileItem(file)
-                    if downloaded :
+                    # downloaded = ftp.downloadFileItem(file)
+                    # if downloaded :
                         if file.endswith('.zip') :
                             with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
                                 zip_ref.extractall(download_dir)
@@ -49,9 +49,9 @@ if __name__ == '__main__' :
                                         logger.error(fileConfig)
                                         continue
 
-                    else :
-                        logger.error("Error occured while downloadind the file {}. Check logs".format(file))
-                        continue
+                    # else :
+                    #     logger.error("Error occured while downloadind the file {}. Check logs".format(file))
+                    #     continue
             else :
                 logger.error("Error occured while trying to access the file list of domain {}. Check if you wrote a file list for this domain in the ftp_url.yaml config file".format(dom))
                 continue

@@ -4,20 +4,21 @@ from utils.path import *
 import os
 import logging
 from registry.controller import registry
-from inspect import signature
+from utils.builders import buildFtpFeederFile, ftp_feeder_file
 
 
 class GeoFilter(baseClass) :
 
-    __slots__ = ["AOI", "registry", "file_path", "logger", "filterType"]
+    __slots__ = ["AOI", "registry", "file_path", "logger", "filterType", "id_result_list"]
 
     def __init__(self, filter_name, dir, filename, geometry, filter_type):
         self.logger = logging.getLogger(__name__)
         self.registry = registry[self.__class__.__name__]
-        self.AOI = self.registry.get('AOI').get(filter_name, None) #TODO : rename mask to areaofinterest
+        self.AOI = self.registry.get('AOI').get(filter_name, None)
         self.current = self.registry.get('geometry').get(geometry, None)
         self.filterType = self.registry.get('geoAction').get(filter_type, None)
         self.file_path = os.path.join(GetParentDir(os.path.dirname(__file__)), dir, filename)
+        self.id_result_list = []
 
     def exec(self, arg=None, cb=None):
         try :
@@ -28,15 +29,17 @@ class GeoFilter(baseClass) :
             if self.filterType is None :
                 raise ValueError("the action you specified in config.yaml does not exist in the registry, check mispelling. It must be one of these : {}".format(u' , '.join(self.registry.get('geoAction').keys())))
             self.AOI = self.AOI()
-            result =  self.current(self.file_path,self. AOI, self.filterType)
+            result, id_list =  self.current(self.file_path,self. AOI, self.filterType)
+            self.id_result_list = id_list
             if cb is not None:
-                callBack = self.registry.get(cb, None)
-                if callBack is None :
-                    self.logger.warning('the callback {} was not found in the registry, please check mispelling'.format(callBack))
+                calback = self.registry.get('callbacks').get(cb, None)
+                if calback is None :
+                    self.logger.warning('the callback {} was not found in the registry, please check mispelling'.format(calback))
                     return result
-                sign = signature(callBack)
-                result = callBack(result)
+                if cb == 'feedData' :
+                    return self.feedData(calback, arg, result)
             return result
+
 
 
         except ValueError as e:
@@ -46,4 +49,20 @@ class GeoFilter(baseClass) :
             self.logger.error(str(e))
 
 
+
+    def feedData(self, cb, arg, hungry_data_struct):
+        tables = arg.get('TABLES', None)
+        if tables is not None :
+
+            for table in tables :
+                table_config = buildFtpFeederFile(table)
+                if table_config is None :
+                    self.logger.error('a problem occured when trying to convert config parameters to ftp_feed_file')
+                    return None
+                feed_file = os.path.join(GetParentDir(os.path.dirname(__file__)), table_config.PATH, table_config.NAME)
+
+                feeder = cb(feed_file, self.id_result_list, table_config.JOIN_FIELD, table_config.FOOD_FIELDS)
+                feeder.exec(hungry_data_struct)
+        else :
+            self.logger.error('feedData callback called but no TABLES attribute was found')
 

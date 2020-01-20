@@ -10,6 +10,21 @@ FILES :
           GEO_TYPE : point
           AOI : JERUSALEM
           FILTER_TYPE : within
+          CB:
+            - NAME: feedData
+              TABLES:
+                - NAME: stop_times.txt
+                  PATH: download
+                  JOIN_FIELD: stop_id
+                  FOOD_FIELDS:
+                    - trip_id
+                    - arrival_time
+                    - departure_time
+                    - stop_id
+                    - stop_sequence
+                    - pickup_type
+                    - drop_off_type
+                    - shape_dist_traveled
 
 
 
@@ -22,6 +37,7 @@ FILES :
             - NAME: feedData
               TABLES :
                 - NAME : trips.txt
+                  PATH : download
                   JOIN_FIELD : shape_id
                   FOOD_FIELDS :
                     - route_id
@@ -31,6 +47,7 @@ FILES :
                     - direction_id
 
                 - NAME : routes.txt
+                  PATH : download
                   JOIN_FIELD : shape_id
                   FOOD_FIELDS :
                     - route_id
