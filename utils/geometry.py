@@ -5,8 +5,8 @@ from shapely.geometry import Point
 from utils.projections import *
 from utils.control import timing
 from utils.path import *
-import os
-
+import multiprocessing as mp, os
+from multiprocessing import cpu_count
 import shapely.wkt
 def chechPointWithinPolygon(point, polygon) :
     return point.within(polygon)
@@ -65,35 +65,28 @@ def checkPointsFromFile(workFile, AOI, filterType) :
                     continue
         return all_points, hash_id
 
-@timing
-def checkLinesFromFile(workFile, AOI, filterType):
-    '''
+def defineIndexes(workFile) :
+    with open(workFile, encoding='utf-8') as f:
+        line = f.readline()
+        for p in filter(None, line.split('\n')):
+                columns = p.split(',')
+                id_index = [i for i, s in enumerate(columns) if 'id' in s][0]
+                lat_index = [i for i, s in enumerate(columns) if 'lat' in s][0]
+                lon_index = [i for i, s in enumerate(columns) if 'lon' in s][0]
+        return id_index, lat_index, lon_index
+    
 
-    :param workFile:  Must be ordered by route_id
-    :param AOI:
-    :param filterType:
-    :return:
-    '''
+
+def checkLines(chunkStart, chunkSize, workFile, AOI, filterType, id_index, lat_index, lon_index):
 
     with open(workFile, encoding='utf-8') as f :
-        All_routes = {}
-        hash_id = {}
-        i = 0
-        id_index = 0
-        lat_index = 1
-        lon_index = 2
         Current_route_points = []
-        Current_route_id = -1
         Current_route_intersect = False
-        for chunk in f:
-            for p in filter(None, chunk.split('\n')) :
-                if Current_route_id == -1 :
-                    columns = p.split(',')
-                    id_index = [i for i, s in enumerate(columns) if 'id' in s][0]
-                    lat_index = [i for i, s in enumerate(columns) if 'lat' in s][0]
-                    lon_index = [i for i, s in enumerate(columns) if 'lon' in s][0]
-                    Current_route_id  = 0
-                else :
+        Current_route_id = 0
+        f.seek(chunkStart)
+        lines = f.read(chunkSize).splitlines()
+        for chunk in lines:
+            for p in filter(None, chunk.split('\n')):
                     try:
                         point = p.split(',')
                         #Check if aleready loop on this id
@@ -103,19 +96,23 @@ def checkLinesFromFile(workFile, AOI, filterType):
                             if Current_route_intersect :
                                 # try to convert to Point :
                                 try :
-                                    newPoint = Point(float(point[lat_index]), float(point[lon_index]))
+                                    newPoint = Point(float(point[lat_index]), float(point[lon_index ]))
                                     #Add new point to points list
                                     Current_route_points.append(newPoint)
                                     continue
                                 except Exception as e:
-                                    print(str(e))
+                                    # print(str(e))
                                     # print("point {} of route {} cannot be converted to point".format(point[-1], Current_route_id))
                                     continue
                         # NEW ROUTE
                         #set the new Current route id
                         if len(Current_route_points) > 0 :
-                            All_routes[Current_route_id] = Current_route_points
-                            hash_id[Current_route_id] = Current_route_id
+                            #TODO Insert in db
+                            # if Current_route_id in All_routes :
+                            #     All_routes[Current_route_id].append(Current_route_points)
+                            # else :
+                            #     All_routes[Current_route_id] = Current_route_points
+                            # hash_id[Current_route_id] = Current_route_id
                             Current_route_points = []
 
                         Current_route_id = point[id_index]
@@ -127,11 +124,41 @@ def checkLinesFromFile(workFile, AOI, filterType):
                                 Current_route_points.append(pointCheck)
                                 Current_route_intersect = True
                         except Exception as e:
-                            print(str(e))
+                            # print(str(e))
                             # print("point {} of route {} cannot be converted to point".format(point[-1], Current_route_id))
                             continue
 
                     except :
-                        i += 1
                         continue
-        return All_routes, id_list
+
+def chunkify(fname,size=1024*1024):
+    fileEnd = os.path.getsize(fname)
+    with open(fname,'rb') as f:
+        chunkEnd = f.tell()
+        while True:
+            chunkStart = chunkEnd
+            f.seek(size,1)
+            f.readline()
+            chunkEnd = f.tell()
+            yield chunkStart, chunkEnd - chunkStart
+            if chunkEnd > fileEnd:
+                break
+@timing
+def checkLinesFromFile(workFile, AOI, filterType) :
+    #init objects
+    pool = mp.Pool(1)
+    jobs = []
+    All_routes = {}
+    hash_id = {}
+    id_index, lat_index, lon_index = defineIndexes(workFile)
+    #create jobs
+    for chunkStart,chunkSize in chunkify(workFile):
+        jobs.append( pool.apply_async(checkLines,(chunkStart,chunkSize, workFile, AOI, filterType, id_index, lat_index, lon_index)) )
+
+    #wait for all jobs to finish
+    for job in jobs:
+        job.get()
+
+    #clean up
+    pool.close()
+

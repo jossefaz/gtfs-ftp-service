@@ -113,6 +113,16 @@ loggers:
         handlers: [info_file_handler, error_file_handler, critical_file_handler, debug_file_handler, warn_file_handler]
         propogate: no
 
+    Controller.AlphaFilter:
+        level: DEBUG
+        handlers: [info_file_handler, error_file_handler, critical_file_handler, debug_file_handler, warn_file_handler]
+        propogate: no
+
+    Controller.Feeder:
+        level: DEBUG
+        handlers: [info_file_handler, error_file_handler, critical_file_handler, debug_file_handler, warn_file_handler]
+        propogate: no
+
     Terminal :
         level: DEBUG
         handlers: [console, error_console]

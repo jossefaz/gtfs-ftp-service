@@ -3,7 +3,7 @@ from Template.BaseClass import baseClass
 from utils.path import *
 import os
 import logging
-from registry.controller import registry
+from registry.GeoFilter import REGISTRY
 from utils.builders import buildFtpFeederFile, ftp_feeder_file
 
 
@@ -13,7 +13,7 @@ class GeoFilter(baseClass) :
 
     def __init__(self, filter_name, directory, filename, geometry, filter_type):
         self.logger = logging.getLogger(__name__)
-        self.registry = registry[self.__class__.__name__]
+        self.registry = REGISTRY
         self.AOI = self.registry.get('AOI').get(filter_name, None)
         self.current = self.registry.get('geometry').get(geometry, None)
         self.filterType = self.registry.get('filter').get(filter_type, None)
@@ -49,7 +49,7 @@ class GeoFilter(baseClass) :
                 self.logger.warning(
                     'the callback {} was not found in the registry, please check mispelling'.format(callback))
             elif callback.get('parameter') == 'tables':
-                self.loopTable(callback.get('factory'), cb.get('TABLES', None), table_ref)
+                self.loopTable(callback.get('factory'), cb.get('TABLES', None),id_result_hash, table_ref)
             else:
                 factory = callback.get('factory')(id_result_hash, table_ref)
                 factory.exec()

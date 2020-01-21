@@ -16,37 +16,7 @@ def read_in_chunks(file_object, chunk_size=1024):
         if not data:
             break
         yield data
-def process_wrapper(chunkStart, chunkSize, fname, joinF, id_result_hash, field_map_index, field_dict):
 
-    with open(fname) as f:
-        global index_field
-        global pipeControl
-        global first_line
-        global conn
-        f.seek(chunkStart)
-        lines = f.read(chunkSize).splitlines()
-        for line in lines:
-            with conn.pipeline() as pipe:
-                if first_line:
-                    try:
-                        index_field = line.rstrip('\n').split(',').index(joinF)
-                        first_line = False
-                    except IndexError as e:
-                        print(str(e))
-                        return None
-                else:
-                    if pipeControl % 10 == 0:
-                        pipe.execute()
-                    current_attr_lst = line.split(',')
-                    current_id = current_attr_lst[index_field]
-                    if id_result_hash.get(current_id, None) is not None:
-                        # if current_id not in food_store :
-                        #     food_store[current_id] = []
-                        attr_dict = {}
-                        for i in field_map_index:
-                            attr_dict[field_dict[i]] = current_attr_lst[i]
-                        pipe.hmset(current_id, attr_dict)
-                        pipeControl += 1
 
 
 

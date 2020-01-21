@@ -38,8 +38,9 @@ if __name__ == '__main__' :
                                 if fType == 'GEO' :
                                     fileConfig = buildFtpGeoFile(f)
                                     if isinstance( fileConfig, ftp_geo_file):
-                                        geo_filter = GeoFilter(filter_name=fileConfig.AOI, dir=download_dir,filename=fileConfig.NAME, geometry=fileConfig.GEO_TYPE, filter_type=fileConfig.FILTER_TYPE)
-                                        execute(geo_filter, f.get('CB', []))
+                                        geo_filter = GeoFilter(filter_name=fileConfig.AOI, directory=download_dir,filename=fileConfig.NAME, geometry=fileConfig.GEO_TYPE, filter_type=fileConfig.FILTER_TYPE)
+
+                                        execute(geo_filter, cb=f.get('CB', []))
                                     else :
                                         logger.error(fileConfig)
                                         continue

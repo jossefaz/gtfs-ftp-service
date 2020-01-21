@@ -6,6 +6,7 @@ import os
 from utils.path import GetParentDir
 from utils.control import timing
 from utils.file import readHugeFile
+from utils.alphanum import fieldMapper
 
 
 class Feeder(baseClass) :
@@ -22,30 +23,13 @@ class Feeder(baseClass) :
         self.id_result_hash = id_result_hash
         self.table_ref = table_ref
 
-
     def exec(self, arg=None, cb=None):
         if cb is None:
             cb = []
-        self.field_map_index, self.field_dict = self.fieldMapper()
+        self.field_map_index, self.field_dict = fieldMapper(self.feed_file,self.fields, self.logger)
         self.buildFoodStore()
         pass
 
-    def fieldMapper(self):
-        with open(self.feed_file, encoding='utf-8-sig') as f:
-            ref_fields = f.readline().rstrip('\n').split(',')
-        if self.fields is None :
-            ref_fields = [i for i in range(0, len(ref_fields) - 1)]
-            return ref_fields
-        fields_filtered = []
-        field_dict = {}
-        for field in self.fields :
-            if field not in  ref_fields:
-                self.logger.warning("field {} of file {} from the ftp_url.yaml was not found in the downloaded file, check mispelling".format(field, self.file))
-                continue
-
-            fields_filtered.append(ref_fields.index(field))
-            field_dict[ref_fields.index(field)] = field
-        return fields_filtered, field_dict
     @timing
     def buildFoodStore(self):
         first_line = True
