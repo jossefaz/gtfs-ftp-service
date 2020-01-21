@@ -11,7 +11,7 @@ FILES :
           AOI : JERUSALEM
           FILTER_TYPE : within
           CB:
-            - NAME: feedData
+            - NAME: filterAlphanum
               TABLES:
                 - NAME: stop_times.txt
                   PATH: download
@@ -25,16 +25,13 @@ FILES :
                     - pickup_type
                     - drop_off_type
                     - shape_dist_traveled
-
-
-
         - NAME : shapes.txt
           FILE_TYPE : GEO
           GEO_TYPE: line
           AOI: JERUSALEM
           FILTER_TYPE : within
           CB:
-            - NAME: feedData
+            - NAME: filterAlphanum
               TABLES :
                 - NAME : trips.txt
                   PATH : download

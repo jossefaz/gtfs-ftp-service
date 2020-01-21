@@ -8,10 +8,10 @@ from Controller.FtpLoader import FtpLoader
 from utils.builders import buildFtpGeoFile, ftp_geo_file
 import zipfile
 
-def execute(instance, cb=None) :
-    if cb is not None:
-        return instance.exec(arg=cb[0], cb=cb[0].get('NAME'))
-    return instance.exec()
+def execute(instance, arg=None, cb=[]) :
+    if len(cb) > 0:
+        return instance.exec(arg, cb)
+    return instance.exec(arg)
 
 if __name__ == '__main__' :
 
@@ -39,12 +39,7 @@ if __name__ == '__main__' :
                                     fileConfig = buildFtpGeoFile(f)
                                     if isinstance( fileConfig, ftp_geo_file):
                                         geo_filter = GeoFilter(filter_name=fileConfig.AOI, dir=download_dir,filename=fileConfig.NAME, geometry=fileConfig.GEO_TYPE, filter_type=fileConfig.FILTER_TYPE)
-                                        results = execute(geo_filter, f.get('CB', None))
-                                        if results is not None :
-                                            print("OK")
-                                        else :
-                                            logger.error("an error occured, check logs")
-                                            continue
+                                        execute(geo_filter, f.get('CB', []))
                                     else :
                                         logger.error(fileConfig)
                                         continue

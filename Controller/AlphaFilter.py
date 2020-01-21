@@ -7,38 +7,30 @@ from registry.controller import registry
 from utils.builders import buildFtpFeederFile, ftp_feeder_file
 
 
-class GeoFilter(baseClass) :
+class AlphaFilter(baseClass) :
 
-    __slots__ = ["AOI", "registry", "file_path", "logger", "filterType", "current"]
+    __slots__ = [ "logger","registry", "filterType", "query", "file_path"]
 
-    def __init__(self, filter_name, directory, filename, geometry, filter_type):
+    def __init__(self, table_config=None, id_hash=None, table_ref=None, filter_type="by_id", sql_query=None):
         self.logger = logging.getLogger(__name__)
         self.registry = registry[self.__class__.__name__]
-        self.AOI = self.registry.get('AOI').get(filter_name, None)
-        self.current = self.registry.get('geometry').get(geometry, None)
         self.filterType = self.registry.get('filter').get(filter_type, None)
-        self.file_path = os.path.join(GetParentDir(os.path.dirname(__file__)), directory, filename)
+        self.query = sql_query if sql_query is not None else id_hash
+        self.file_path = os.path.join(GetParentDir(os.path.dirname(__file__)), table_config.PATH, table_config.NAME) if table_config is not None else None
 
 
     def exec(self, arg=None, cbs=None):
         if cbs is None:
             cbs = []
         try :
-            if self.AOI is None :
-                raise ValueError("the AOI you specified in config.yaml does not exist in the registry, check mispelling. It must be one of these : {}".format(u' , '.join(self.registry.get('AOI').keys())))
-            if self.current is None :
-                raise ValueError("the geometry you specified in config.yaml does not exist in the registry, check mispelling. It must be one of these : {}".format(u' , '.join(self.registry.get('geometry').keys())))
             if self.filterType is None :
-                raise ValueError("the filter you specified in config.yaml does not exist in the registry, check mispelling. It must be one of these : {}".format(u' , '.join(self.registry.get('filter').keys())))
-            self.AOI = self.AOI()
-            table_ref, id_result_hash =  self.current(self.file_path,self. AOI, self.filterType)
+                raise ValueError("the action you specified in config.yaml does not exist in the registry, check mispelling. It must be one of these : {}".format(u' , '.join(self.registry.get('filter').keys())))
+            table_ref, id_result_hash =  self.filterType(self.file_path, self.query)
             if len(cbs) > 0:
                 self.runPipeline(cbs, id_result_hash, table_ref)
             return table_ref
-
         except ValueError as e:
             self.logger.error(e)
-
         except Exception as e :
             self.logger.error(str(e))
 
@@ -53,6 +45,8 @@ class GeoFilter(baseClass) :
             else:
                 factory = callback.get('factory')(id_result_hash, table_ref)
                 factory.exec()
+
+
     def loopTable(self, cb, tables,id_result_hash, table_ref):
         if tables is not None :
             for table in tables :
