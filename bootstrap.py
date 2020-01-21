@@ -41,7 +41,7 @@ if __name__ == '__main__' :
                                         geo_filter = GeoFilter(filter_name=fileConfig.AOI, dir=download_dir,filename=fileConfig.NAME, geometry=fileConfig.GEO_TYPE, filter_type=fileConfig.FILTER_TYPE)
                                         results = execute(geo_filter, f.get('CB', None))
                                         if results is not None :
-                                            print(len(results))
+                                            print("OK")
                                         else :
                                             logger.error("an error occured, check logs")
                                             continue

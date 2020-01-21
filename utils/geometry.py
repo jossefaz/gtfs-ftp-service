@@ -44,7 +44,7 @@ if __name__ == '__main__' :
 def checkPointsFromFile(workFile, AOI, filterType) :
     with open(workFile, encoding='utf-8') as f :
         all_points = {}
-        id_list = []
+        hash_id = {}
         i = -1
         for chunk in f:
             for p in filter(None, chunk.split('\n')) :
@@ -59,11 +59,11 @@ def checkPointsFromFile(workFile, AOI, filterType) :
                     pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
                     if checkPointPolygonList(pointCheck, AOI, filterType) :
                         all_points[point[id_index]] = [p, pointCheck.wkt]
-                        id_list.append(point[id_index])
+                        hash_id[point[id_index]] = point[id_index]
                 #Commentaire
                 except :
                     continue
-        return all_points, id_list
+        return all_points, hash_id
 
 @timing
 def checkLinesFromFile(workFile, AOI, filterType):
@@ -77,7 +77,7 @@ def checkLinesFromFile(workFile, AOI, filterType):
 
     with open(workFile, encoding='utf-8') as f :
         All_routes = {}
-        id_list = []
+        hash_id = {}
         i = 0
         id_index = 0
         lat_index = 1
@@ -115,7 +115,7 @@ def checkLinesFromFile(workFile, AOI, filterType):
                         #set the new Current route id
                         if len(Current_route_points) > 0 :
                             All_routes[Current_route_id] = Current_route_points
-                            id_list.append(Current_route_id)
+                            hash_id[Current_route_id] = Current_route_id
                             Current_route_points = []
 
                         Current_route_id = point[id_index]
