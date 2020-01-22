@@ -6,12 +6,13 @@ click-plugins==1.1.1
 cligj==0.5.0
 docopt==0.6.2
 HiYaPyCo==0.4.15
-Shapely==1.6.4.post2
 idna==2.8
 Jinja2==2.10.3
 MarkupSafe==1.1.1
 munch==2.5.0
+mysql-connector==2.2.9
 numpy==1.18.1
+pandas==0.25.3
 pipdeptree==0.13.2
 PyMySQL==0.9.3
 pyodbc==4.0.28
@@ -19,9 +20,10 @@ pyproj==2.4.2.post1
 python-dateutil==2.8.1
 pytz==2019.3
 PyYAML==5.3
+redis==3.3.11
 requests==2.22.0
 retrying==1.3.3
-
+Shapely==1.6.4.post2
 six==1.14.0
 SQLAlchemy==1.3.12
 urllib3==1.25.7
