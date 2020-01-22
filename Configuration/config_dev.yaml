@@ -11,8 +11,9 @@ DB :
     USER : sde
     PSWD : sde
 
-  MY_SQL :
+  MY_SQL_SDE :
     HOST : localhost
+    DB : sde
     USER : louis6
-    PWD : dev123
+    PSWD : dev123
 

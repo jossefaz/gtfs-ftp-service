@@ -26,7 +26,8 @@ FILES :
                     - shape_dist_traveled
                   CB :
                     - NAME : printFoo
-#                      INSTANCE : MY_SQL
+#                      TECH : MY_SQL
+#                      INSTANCE : MY_SQL_SDE
 #                      DB_NAME : sde
 #                      TABLE : stop_times
 

@@ -46,13 +46,7 @@ def getAlphanumById(file, id_hash, id_field, logger, field_map_index, field_dict
     return alphanum
 
 def insertToAlphanumDB(dictValue, table_name, connection_string) :
-    mydb = mysql.connector.connect(
-        host="localhost",
-        user="louis6",
-        passwd="dev123",
-    database = "sde"
-    )
-    mycursor = mydb.cursor()
+
     ins_qry = "INSERT INTO {tablename} ({columns}) VALUES {values};".format(
         tablename='stop_times',
         columns=', '.join(dictValue.keys()),

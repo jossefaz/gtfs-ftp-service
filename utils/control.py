@@ -29,3 +29,11 @@ def setInterval(interval, times = -1):
             return stop
         return wrap
     return outer_wrap
+
+def skip_nones(fun):
+    def _(*args, **kwargs):
+        for a, v in zip(fun.__code__.co_varnames, args):
+            if v is not None:
+                kwargs[a] = v
+        return fun(**kwargs)
+    return _
