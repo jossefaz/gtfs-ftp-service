@@ -1,7 +1,6 @@
 # -*- coding: UTF-8 -*-
 from Template.BaseClass import baseClass
 import logging
-import redis
 import os
 from utils.path import GetParentDir
 from utils.control import timing
@@ -34,52 +33,52 @@ class Feeder(baseClass) :
     def buildFoodStore(self):
         first_line = True
         index_field = 0
-
-        conn = redis.StrictRedis(
-            host='127.0.0.1',
-            port=6543)
-        with conn.pipeline() as pipe:
-
-            pipeControl = 0
-            readHugeFile(self.feed_file)
-            with open(self.feed_file, encoding='utf-8-sig') as f:
-
-                while True :
-                    line = f.readline()
-                    if line :
-                        if first_line :
-                            try:
-                                index_field = line.rstrip('\n').split(',').index(self.joinF)
-                                first_line = False
-                                continue
-                            except IndexError as e :
-                                self.logger.error("the join attribute is not contained in the file : {}".format(self.file))
-                                return None
-                        if pipeControl %10 == 0 :
-                            pipe.execute()
-                        current_attr_lst = line.split(',')
-                        current_id = current_attr_lst[index_field]
-                        if self.id_result_hash.get(current_id, None) is not None:
-                            # if current_id not in food_store :
-                            #     food_store[current_id] = []
-                            attr_dict = {}
-                            for i in self.field_map_index :
-                                attr_dict[self.field_dict[i]] = current_attr_lst[i]
-                            pipe.hmset(current_id, attr_dict)
-                            pipeControl +=1
-                    else :
-                        break
-
-        pipe.execute()
-        conn.save()
+        #
+        # conn = redis.StrictRedis(
+        #     host='127.0.0.1',
+        #     port=6543)
+        # with conn.pipeline() as pipe:
+        #
+        #     pipeControl = 0
+        #     readHugeFile(self.feed_file)
+        #     with open(self.feed_file, encoding='utf-8-sig') as f:
+        #
+        #         while True :
+        #             line = f.readline()
+        #             if line :
+        #                 if first_line :
+        #                     try:
+        #                         index_field = line.rstrip('\n').split(',').index(self.joinF)
+        #                         first_line = False
+        #                         continue
+        #                     except IndexError as e :
+        #                         self.logger.error("the join attribute is not contained in the file : {}".format(self.file))
+        #                         return None
+        #                 if pipeControl %10 == 0 :
+        #                     pipe.execute()
+        #                 current_attr_lst = line.split(',')
+        #                 current_id = current_attr_lst[index_field]
+        #                 if self.id_result_hash.get(current_id, None) is not None:
+        #                     # if current_id not in food_store :
+        #                     #     food_store[current_id] = []
+        #                     attr_dict = {}
+        #                     for i in self.field_map_index :
+        #                         attr_dict[self.field_dict[i]] = current_attr_lst[i]
+        #                     pipe.hmset(current_id, attr_dict)
+        #                     pipeControl +=1
+        #             else :
+        #                 break
+        #
+        # pipe.execute()
+        # conn.save()
 
 
     def feedIt(self, hungry_data_struct):
         pass
 
 
-if __name__ == '__main__' :
-    conn = redis.StrictRedis(
-        host='127.0.0.1',
-        port=6543)
-    conn.set()
+# if __name__ == '__main__' :
+#     conn = redis.StrictRedis(
+#         host='127.0.0.1',
+#         port=6543)
+#     conn.set()

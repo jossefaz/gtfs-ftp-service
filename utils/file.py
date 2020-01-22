@@ -3,7 +3,7 @@
 import csv, sqlite3, sys
 import multiprocessing as mp, os
 from multiprocessing import cpu_count
-import redis
+
 first_line = True
 index_field = 0
 pipeControl = 0

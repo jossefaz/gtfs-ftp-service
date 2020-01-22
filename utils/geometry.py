@@ -6,7 +6,6 @@ from utils.projections import *
 from utils.control import timing
 from utils.path import *
 import multiprocessing as mp, os
-from multiprocessing import cpu_count
 import shapely.wkt
 def chechPointWithinPolygon(point, polygon) :
     return point.within(polygon)
