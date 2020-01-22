@@ -13,7 +13,7 @@ configFiles = {
 
 
 
-class Config(baseClass):
+class Config():
 
     def __init__(self):
         self.logger = logging.getLogger(__name__)

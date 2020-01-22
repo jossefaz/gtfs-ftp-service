@@ -1,7 +1,6 @@
 import csv
 from functools import partial
 from shapely.ops import transform
-from shapely.ops import cascaded_union
 from shapely.geometry import Point
 from utils.projections import *
 from utils.control import timing
@@ -14,33 +13,9 @@ def chechPointWithinPolygon(point, polygon) :
 
 
 def checkPointPolygonList(point, polygonList, filtertype) :
-    check = False
     for poly in polygonList:
         if point.within(poly) :
-            check = True if filtertype == 'within' else False
-        else :
-            check = False if filtertype == 'within' else True
-    return check
-
-def checkPointMultipolygon(point, multipolygon, filtertype) :
-    if point.within(multipolygon) :
-        return True
-    return False
-
-
-def checkPointInExtent(x, y, multipolygon, filtertype):
-    extent = multipolygon.bounds
-    check = ((x > extent[0] and x < extent[2]) and (y > extent[1] and y < extent[3]) ) and filtertype == 'within'
-    if check:
-        return checkPointMultipolygon(Point(x,y), multipolygon, filtertype)
-    return False
-
-def checkPointInExtentList(x, y, polygons, filtertype):
-    for polygon in polygons :
-        extent = polygon.bounds
-        check = ((x > extent[0] and x < extent[2]) and (y > extent[1] and y < extent[3]) ) and filtertype == 'within'
-        if check:
-            return checkPointPolygonList(Point(x,y), polygons, filtertype)
+            return True
     return False
 
 def getTransformer(fromCRS, toCRS):
@@ -62,7 +37,7 @@ if __name__ == '__main__' :
     getJerusalemBorder()
 
 def defineIndexes(workFile) :
-    with open(workFile, encoding='utf-8') as f:
+    with open(workFile, encoding='utf-8-sig') as f:
         line = f.readline()
         for p in filter(None, line.split('\n')):
                 columns = p.split(',')
@@ -72,28 +47,28 @@ def defineIndexes(workFile) :
         return id_index, lat_index, lon_index
 
 
+
 @timing
 def checkPointsFromFile(workFile, AOI, filterType) :
+    id_index, lat_index, lon_index = defineIndexes(workFile)
+    all_points = {}
+    hash_id = {}
+    firstLine = -1
     with open(workFile, encoding='utf-8') as f :
-        all_points = {}
-        hash_id = {}
-        firstLine = -1
-        id_index, lat_index, lon_index = defineIndexes(workFile)
         for line in f:
                 if firstLine == -1 :
                     firstLine = 0
                     continue
                 try:
                     point = line.strip('\n').split(',')
-                    pointCheck = checkPointInExtentList(float(point[lat_index]), float(point[lon_index]), AOI, filterType)
-                    if pointCheck :
-                        all_points[point[id_index]] = [line.strip('\n'), Point(float(point[lat_index]), float(point[lon_index]))]
+                    pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
+                    if checkPointPolygonList(pointCheck, AOI, filterType) :
+                        all_points[point[id_index]] = [line.strip('\n'), pointCheck.wkt]
                         hash_id[point[id_index]] = point[id_index]
                 #Commentaire
                 except :
                     continue
         return all_points, hash_id
-
 
 @timing
 def checkLinesFromFile(workFile, AOI, filterType):
@@ -104,15 +79,15 @@ def checkLinesFromFile(workFile, AOI, filterType):
     :param filterType:
     :return:
     '''
-
+    id_index, lat_index, lon_index = defineIndexes(workFile)
+    All_routes = {}
+    hash_id = {}
+    i = 0
+    Current_route_points = []
+    Current_route_id = -1
+    Current_route_intersect = False
     with open(workFile, encoding='utf-8') as f :
-        All_routes = {}
-        hash_id = {}
-        i = 0
-        id_index,lat_index,lon_index = defineIndexes(workFile)
-        Current_route_points = []
-        Current_route_id = -1
-        Current_route_intersect = False
+
         for line in f:
             if Current_route_id == -1 :
                 Current_route_id  = 0
@@ -121,6 +96,7 @@ def checkLinesFromFile(workFile, AOI, filterType):
                 point = line.strip('\n').split(',')
                 #Check if aleready loop on this id
                 if point[id_index] == Current_route_id :
+
                     # Check if poitn intersect
                     if Current_route_intersect :
                         # try to convert to Point :
@@ -144,9 +120,9 @@ def checkLinesFromFile(workFile, AOI, filterType):
                 Current_route_intersect = False
                 #try to conver to Point :
                 try:
-                    pointCheck = checkPointInExtentList(float(point[lat_index]), float(point[lon_index]), AOI, filterType)
-                    if pointCheck :
-                        Current_route_points.append(Point(float(point[lat_index]), float(point[lon_index])))
+                    pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
+                    if checkPointPolygonList(pointCheck, AOI, filterType) :
+                        Current_route_points.append(pointCheck)
                         Current_route_intersect = True
                 except Exception as e:
                     print(str(e))

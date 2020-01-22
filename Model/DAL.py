@@ -1,7 +1,43 @@
 import sqlalchemy as db
 from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import sessionmaker, instrumentation
-from sqlalchemy import MetaData, Table, func, and_, or_, not_
+
+# -*- coding: utf-8 -*-
+from Configuration.Config import Config
+import pyodbc
+
+class Dal(type):
+    _instances = {}
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Dal, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+
+
+class SqlServerDB(object):
+    __metaclass__ = Dal
+    def __init__(self, server, dbname, user, password):
+        self.server = server
+        self.database = dbname
+        self.username = user
+        self.password = password
+
+    def connect(self):
+        self.connection = pyodbc.connect("DRIVER={SQL Server};SERVER=%s;DATABASE=%s;UID=%s;PWD=%s"
+                                         % (self.server, self.database, self.username, self.password))
+        self.cursor = self.connection.cursor()
+
+def getConn_SQLServer(Instance_Name):
+    sqlServer = Config.get('DB').get(Instance_Name)
+    conn = SqlServerDB(sqlServer['server'], sqlServer['database'], sqlServer['UserName'], sqlServer['PassWord'])
+    conn.connect()
+    return conn
+
+
+
+
+
+
 
 
 

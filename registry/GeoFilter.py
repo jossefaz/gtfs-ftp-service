@@ -1,7 +1,7 @@
 from utils.geometry import getJerusalemBorder, checkPointsFromFile, checkLinesFromFile
 from Controller.Feeder import Feeder
 from Controller.AlphaFilter import AlphaFilter
-
+from utils.dummy import printFoo
 REGISTRY = {
     "geometry" : {
         "line": checkLinesFromFile,
@@ -15,15 +15,10 @@ REGISTRY = {
         "outbound" : "outbound"
     },
     "callbacks" : {
-        "feedData" : {
-            "factory" : Feeder,
-            "parameter" : "tables"
-        },
-        "filterAlphanum" : {
-            "factory" : AlphaFilter,
-            "parameter" : "tables"
+        "feedData" :  Feeder,
+        "filterAlphanum" : AlphaFilter,
+        "printFoo" : printFoo
         }
 
     }
 
-}

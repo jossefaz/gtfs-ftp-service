@@ -10,3 +10,9 @@ DB :
     INSTANCE : SDE
     USER : sde
     PSWD : sde
+
+  MY_SQL :
+    HOST : localhost
+    USER : louis6
+    PWD : dev123
+

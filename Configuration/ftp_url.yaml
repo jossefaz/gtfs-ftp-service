@@ -24,6 +24,14 @@ FILES :
                     - pickup_type
                     - drop_off_type
                     - shape_dist_traveled
+                  CB :
+                    - NAME : printFoo
+#                      INSTANCE : MY_SQL
+#                      DB_NAME : sde
+#                      TABLE : stop_times
+
+            - NAME : printFoo
+
         - NAME : shapes.txt
           FILE_TYPE : GEO
           GEO_TYPE: line

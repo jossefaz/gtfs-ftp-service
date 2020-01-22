@@ -11,9 +11,9 @@ import os
 
 
 MONITOR_INTERVAL = 30
-class FtpLoader(baseClass):
+class FtpLoader():
 
-    __slots__ = ['host', 'port', 'ptr', 'max_attempts', 'waiting', 'logger','outDir']
+    __slots__ = ['host', 'port', 'ptr', 'max_attempts', 'waiting', 'logger','outDir', 'cwd']
 
     def __init__(self, host, port=21, outDir = None):
         self.logger = logging.getLogger(__name__)
