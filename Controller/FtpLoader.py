@@ -13,7 +13,7 @@ import os
 MONITOR_INTERVAL = 30
 class FtpLoader():
 
-    __slots__ = ['host', 'port', 'ptr', 'max_attempts', 'waiting', 'logger','outDir', 'cwd']
+    __slots__ = ['host', 'port', 'ptr', 'max_attempts', 'waiting', 'logger','outDir', 'cwd', 'ftp']
 
     def __init__(self, host, port=21, outDir = None):
         self.logger = logging.getLogger(__name__)
@@ -24,6 +24,7 @@ class FtpLoader():
         self.waiting = True
         self.cwd = os.getcwd()
         self.outDir = outDir
+        self.ftp = None
 
     def exec(self, dst_filename, cb=None):
         self.downloadFileItem(dst_filename)
@@ -114,7 +115,8 @@ class FtpLoader():
             local_filename = os.path.join(checkPath, local_filename)
         try:
             conn = self.connect()
-        except:
+        except Exception as e:
+            print(str(e))
             return False
         if conn:
 
