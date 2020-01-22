@@ -79,16 +79,15 @@ def checkPointsFromFile(workFile, AOI, filterType) :
         hash_id = {}
         firstLine = -1
         id_index, lat_index, lon_index = defineIndexes(workFile)
-        for chunk in f:
-            for p in filter(None, chunk.split('\n')) :
+        for line in f:
                 if firstLine == -1 :
                     firstLine = 0
                     continue
                 try:
-                    point = p.split(',')
+                    point = line.strip('\n').split(',')
                     pointCheck = checkPointInExtentList(float(point[lat_index]), float(point[lon_index]), AOI, filterType)
                     if pointCheck :
-                        all_points[point[id_index]] = [p]
+                        all_points[point[id_index]] = [line.strip('\n'), Point(float(point[lat_index]), float(point[lon_index]))]
                         hash_id[point[id_index]] = point[id_index]
                 #Commentaire
                 except :
@@ -122,7 +121,6 @@ def checkLinesFromFile(workFile, AOI, filterType):
                 point = line.strip('\n').split(',')
                 #Check if aleready loop on this id
                 if point[id_index] == Current_route_id :
-
                     # Check if poitn intersect
                     if Current_route_intersect :
                         # try to convert to Point :
@@ -146,9 +144,9 @@ def checkLinesFromFile(workFile, AOI, filterType):
                 Current_route_intersect = False
                 #try to conver to Point :
                 try:
-                    pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
-                    if checkPointMultipolygon(pointCheck, AOI, filterType) :
-                        Current_route_points.append(pointCheck)
+                    pointCheck = checkPointInExtentList(float(point[lat_index]), float(point[lon_index]), AOI, filterType)
+                    if pointCheck :
+                        Current_route_points.append(Point(float(point[lat_index]), float(point[lon_index])))
                         Current_route_intersect = True
                 except Exception as e:
                     print(str(e))
