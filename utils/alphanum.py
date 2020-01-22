@@ -45,16 +45,6 @@ def getAlphanumById(file, id_hash, id_field, logger, field_map_index, field_dict
                     break
     return alphanum
 
-def insertToAlphanumDB(dictValue, table_name, connection_string) :
-
-    ins_qry = "INSERT INTO {tablename} ({columns}) VALUES {values};".format(
-        tablename='stop_times',
-        columns=', '.join(dictValue.keys()),
-        values=tuple(dictValue.values())
-    )
-    mycursor.execute(ins_qry)
-    mydb.commit()
-    return True
 
 if __name__ == '__main__' :
     pass

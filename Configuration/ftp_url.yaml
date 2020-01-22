@@ -25,11 +25,12 @@ FILES :
                     - drop_off_type
                     - shape_dist_traveled
                   CB :
-                    - NAME : printFoo
-#                      TECH : MY_SQL
-#                      INSTANCE : MY_SQL_SDE
-#                      DB_NAME : sde
-#                      TABLE : stop_times
+                    - NAME : DB
+                      TECH : MY_SQL
+                      INSTANCE : MY_SQL_SDE
+                      ACTION : insert
+                      DB_NAME : sde
+                      TABLE : stop_times
 
             - NAME : printFoo
 

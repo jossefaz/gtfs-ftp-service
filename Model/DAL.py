@@ -59,7 +59,7 @@ def SQLServerConnector(Instance_Name):
     return conn
 
 def MySQLConnector(Instance_Name):
-    config = Config.get('DB').get(Instance_Name)
+    config = Config().get_property('DB').get(Instance_Name)
     conn = MySQLDB(config.get('USER'),  config.get('PSWD'), config.get('DB'), config.get('HOST'), config.get('PORT'))
     conn.connect()
     return conn
