@@ -86,9 +86,8 @@ def checkLines(chunkStart, chunkSize, workFile, AOI, filterType, id_index, lat_i
         f.seek(chunkStart)
         lines = f.read(chunkSize).splitlines()
         for chunk in lines:
-            for p in filter(None, chunk.split('\n')):
                     try:
-                        point = p.split(',')
+                        point = chunk.strip('\n').split(',')
                         #Check if aleready loop on this id
                         if point[id_index] == Current_route_id :
 
