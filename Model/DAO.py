@@ -19,11 +19,11 @@ class DAO() :
         self.data_to_insert = None
 
     def exec(self, args):
-        connector = DAL(self.params.get('TECH')).connect()
+        connector = DAL(self.params.get('INSTANCE'))
         if connector :
             if args :
                 self.data_to_insert = args
-            self.instance = connector(self.params.get('INSTANCE'))
+            self.instance = connector.connect()
             action = getattr(self, self.params.get('ACTION'))
             action()
 

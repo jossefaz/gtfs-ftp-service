@@ -26,7 +26,6 @@ FILES :
                     - shape_dist_traveled
                   CB :
                     - NAME : DB
-                      TECH : MYSQL
                       INSTANCE : MY_SQL_SDE
                       ACTION : insert
                       DB_NAME : sde

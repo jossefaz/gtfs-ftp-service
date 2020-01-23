@@ -10,10 +10,12 @@ DB :
     INSTANCE : SDE
     USER : sde
     PSWD : sde
+    TECH : MSSQL
 
   MY_SQL_SDE :
     HOST : localhost
     DB : sde
     USER : louis6
     PSWD : dev123
+    TECH : MYSQL
 
