@@ -1,10 +1,10 @@
 import mysql
-from Template.BaseClass import Dal
+from Template.BaseClass import singleton
 from utils.control import skip_nones
 
 class MySQLDB() :
 
-    __metaclass__ = Dal
+    __metaclass__ = singleton
 
     @skip_nones
     def __init__(self, user, password, dbname, host='127.0.0.1', port=3306):

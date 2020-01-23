@@ -1,8 +1,8 @@
 import pyodbc
-from Template.BaseClass import Dal
+from Template.BaseClass import singleton
 
 class SqlServerDB():
-    __metaclass__ = Dal
+    __metaclass__ = singleton
     def __init__(self, server, dbname, user, password):
         self.server = server
         self.database = dbname

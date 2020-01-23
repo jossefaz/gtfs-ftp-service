@@ -5,8 +5,9 @@ import os
 from Controller.GeoFilter import GeoFilter
 from logger.boot import setupLogging
 from Controller.FtpLoader import FtpLoader
-from utils.builders import buildFtpGeoFile, ftp_geo_file
+from utils.builders import InterfaceBuilder
 import zipfile
+from Store.main import Store
 
 def execute(instance, arg=None, cb=[]) :
     if len(cb) > 0:
@@ -16,6 +17,8 @@ def execute(instance, arg=None, cb=[]) :
 if __name__ == '__main__' :
 
     setupLogging()
+    store = Store()
+    mainStore = store.get_instance()
     logger = logging.getLogger(__name__)
     config = Config()
     urls = config.get_property("URL")
@@ -27,27 +30,23 @@ if __name__ == '__main__' :
                 ftp = FtpLoader(url, outDir=download_dir)
                 for file, props in dict_files.items() :
 
-                    # downloaded = ftp.downloadFileItem(file)
-                    # if downloaded :
-                    #     if file.endswith('.zip') :
-                    #         with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
-                    #             zip_ref.extractall(download_dir)
+                    downloaded = ftp.downloadFileItem(file)
+                    if downloaded :
+                        if file.endswith('.zip') :
+                            with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
+                                zip_ref.extractall(download_dir)
                         for f in props :
-                            fType = f.get('FILE_TYPE')
+                            fType = f.get('ITYPE')
                             if fType is not None :
                                 if fType == 'GEO' :
-                                    fileConfig = buildFtpGeoFile(f)
-                                    if isinstance( fileConfig, ftp_geo_file):
-                                        geo_filter = GeoFilter(filter_name=fileConfig.AOI, directory=download_dir,filename=fileConfig.NAME, geometry=fileConfig.GEO_TYPE, filter_type=fileConfig.FILTER_TYPE)
+                                    fileConfig = InterfaceBuilder(f, f.get('ITYPE'))
+                                    geo_filter = GeoFilter(fileConfig, download_dir)
+                                    execute(geo_filter, cb=f.get('CB', []))
 
-                                        execute(geo_filter, cb=f.get('CB', []))
-                                    else :
-                                        logger.error(fileConfig)
-                                        continue
 
-                    # else :
-                    #     logger.error("Error occured while downloadind the file {}. Check logs".format(file))
-                    #     continue
+                    else :
+                        logger.error("Error occured while downloadind the file {}. Check logs".format(file))
+                        continue
             else :
                 logger.error("Error occured while trying to access the file list of domain {}. Check if you wrote a file list for this domain in the ftp_url.yaml config file".format(dom))
                 continue

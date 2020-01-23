@@ -68,7 +68,7 @@ def checkPointsFromFile(workFile, AOI, filterType) :
                 #Commentaire
                 except :
                     continue
-        return all_points, hash_id
+        return { "result" : all_points, "ids" : hash_id}
 
 @timing
 def checkLinesFromFile(workFile, AOI, filterType):
@@ -132,4 +132,4 @@ def checkLinesFromFile(workFile, AOI, filterType):
             except :
                 i += 1
                 continue
-        return All_routes, hash_id
+        return { "result" : All_routes, "ids" : hash_id}

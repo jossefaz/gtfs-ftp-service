@@ -31,7 +31,7 @@ def getAlphanumById(file, id_hash, id_field, logger, field_map_index, field_dict
                         except IndexError as e :
                             logger.error("the join attribute is not contained in the file : {}".format(file))
                             return None
-                    current_attr_lst = line.split(',')
+                    current_attr_lst = line.strip('\n').split(',')
                     current_id = current_attr_lst[index_field]
                     if id_hash.get(current_id, None):
                         if current_id not in alphanum :

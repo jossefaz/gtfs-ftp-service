@@ -4,74 +4,78 @@ URL :
 FILES :
   MOT :
     israel-public-transportation.zip :
-        - NAME : stops.txt
-          FILE_TYPE : GEO
-          GEO_TYPE : point
-          AOI : JERUSALEM
-          FILTER_TYPE : within
-          RESULT_NAME: stops
-          CB:
-            - NAME: filterAlphanum
-              TABLES:
-                - NAME: stop_times.txt
-                  PATH: download
-                  JOIN_FIELD: stop_id
-                  FOOD_FIELDS:
-                    - trip_id
-                    - arrival_time
-                    - departure_time
-                    - stop_id
-                    - stop_sequence
-                    - pickup_type
-                    - drop_off_type
-                    - shape_dist_traveled
-                  RESULT_NAME: stops.time
-                  LINKED_TO : stops
-                  CB :
-                    - NAME : DB
-                      INSTANCE : MY_SQL_SDE
-                      ACTION : insert
-                      TABLE : stop_times
-                      RESULT_NAME: stops.time.db
-                      LINKED_TO: stops.time
+#        - NAME : stops.txt
+#          ITYPE : GEO
+#          GEO_TYPE : point
+#          AOI : JERUSALEM
+#          FILTER_TYPE : within
+#          RESULT_NAME: stops
+#          CB:
+#            - NAME: filterAlphanum
+#              ITYPE : TABLES
+#              TABLES:
+#                - NAME: stop_times.txt
+#                  ITYPE : ALPHA
+#                  PATH: download
+#                  JOIN_FIELD: stop_id
+#                  FOOD_FIELDS:
+#                    - trip_id
+#                    - arrival_time
+#                    - departure_time
+#                    - stop_id
+#                    - stop_sequence
+#                    - pickup_type
+#                    - drop_off_type
+#                    - shape_dist_traveled
+#                  RESULT_NAME: stops.time
+#                  LINKED_TO : stops
+#                  CB :
+#                    - NAME : DB
+#                      ITYPE : DB_CB
+#                      INSTANCE : MY_SQL_SDE
+#                      ACTION : insert
+#                      TABLE : stop_times
+#                      RESULT_NAME: stops.time.db
+#                      LINKED_TO: stops.time
 
-            - NAME : printFoo
-              RESULT_NAME: stops.printFoo
-              LINKED_TO: stops
+            - NAME: DB
+              ITYPE: DB
+              INSTANCE: POSTGIS
+              ACTION: insertGeo
+              TABLE: stop_times
+              RESULT_NAME: stops.time.db
+              LINKED_TO: stops.time
 
         - NAME : shapes.txt
-          FILE_TYPE : GEO
+          ITYPE : GEO
           GEO_TYPE: line
           AOI: JERUSALEM
           FILTER_TYPE : within
-          JOB_NAME : shapes
+          RESULT_NAME : shapes
           CB:
             - NAME: filterAlphanum
+              ITYPE : TABLES
               TABLES :
                 - NAME : trips.txt
+                  ITYPE : ALPHA
                   PATH : download
                   JOIN_FIELD : shape_id
+                  RESULT_NAME: shapes.trips
+                  LINKED_TO: shapes
                   FOOD_FIELDS :
                     - route_id
                     - service_id
                     - trip_id
                     - trip_headsign
                     - direction_id
-                - NAME : routes.txt
-                  PATH : download
-                  JOIN_FIELD : shape_id
-                  FOOD_FIELDS :
-                    - route_id
-                    - agency_id
-                    - route_short_name
-                    - route_long_name
-                    - route_desc
-                    - route_type
-                    - route_color
             - NAME: DB
+              ITYPE: DB
               INSTANCE: POSTGIS
               ACTION: insertGeo
               TABLE: stop_times
+              RESULT_NAME: stops.time.db
+              LINKED_TO: stops.time
+
 
 
 
