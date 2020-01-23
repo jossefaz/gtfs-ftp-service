@@ -9,6 +9,7 @@ FILES :
           GEO_TYPE : point
           AOI : JERUSALEM
           FILTER_TYPE : within
+          RESULT_NAME: stops
           CB:
             - NAME: filterAlphanum
               TABLES:
@@ -24,20 +25,26 @@ FILES :
                     - pickup_type
                     - drop_off_type
                     - shape_dist_traveled
+                  RESULT_NAME: stops.time
+                  LINKED_TO : stops
                   CB :
                     - NAME : DB
                       INSTANCE : MY_SQL_SDE
                       ACTION : insert
-                      DB_NAME : sde
                       TABLE : stop_times
+                      RESULT_NAME: stops.time.db
+                      LINKED_TO: stops.time
 
             - NAME : printFoo
+              RESULT_NAME: stops.printFoo
+              LINKED_TO: stops
 
         - NAME : shapes.txt
           FILE_TYPE : GEO
           GEO_TYPE: line
           AOI: JERUSALEM
           FILTER_TYPE : within
+          JOB_NAME : shapes
           CB:
             - NAME: filterAlphanum
               TABLES :
@@ -50,7 +57,6 @@ FILES :
                     - trip_id
                     - trip_headsign
                     - direction_id
-
                 - NAME : routes.txt
                   PATH : download
                   JOIN_FIELD : shape_id
@@ -62,6 +68,10 @@ FILES :
                     - route_desc
                     - route_type
                     - route_color
+            - NAME: DB
+              INSTANCE: POSTGIS
+              ACTION: insertGeo
+              TABLE: stop_times
 
 
 

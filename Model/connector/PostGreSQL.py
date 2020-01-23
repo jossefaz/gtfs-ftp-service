@@ -8,7 +8,7 @@ class PGDB() :
     __metaclass__ = Dal
 
     @skip_nones
-    def __init__(self, user, password, dbname, host='127.0.0.1', port=3306):
+    def __init__(self, user, password, dbname, host='127.0.0.1', port=5432):
         self.host = host
         self.port = port
         self.username = user

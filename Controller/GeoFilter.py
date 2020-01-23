@@ -9,7 +9,7 @@ import inspect
 
 class GeoFilter(baseClass) :
 
-    __slots__ = ["AOI", "registry", "file_path", "logger", "filterType", "current"]
+    __slots__ = ["AOI", "registry", "file_path", "logger", "filterType", "current", "tempResult"]
 
     def __init__(self, filter_name, directory, filename, geometry, filter_type):
         self.logger = logging.getLogger(__name__)
@@ -18,7 +18,9 @@ class GeoFilter(baseClass) :
         self.current = self.registry.get('geometry').get(geometry, None)
         self.filterType = self.registry.get('filter').get(filter_type, None)
         self.file_path = os.path.join(GetParentDir(os.path.dirname(__file__)), directory, filename)
+        self.tempResult = {}
         self.result = None
+        self.jobID = 0
 
 
     def exec(self, arg=None, cbs=None):
@@ -50,6 +52,7 @@ class GeoFilter(baseClass) :
                 self.logger.warning(
                     'the callback {} was not found in the registry, please check mispelling'.format(callback))
             elif cb.get('TABLES'):
+                self.tempResult =
                 self.loopTable(callback, cb.get('TABLES', None),id_result_hash)
             else:
                 self.result = self.runCB(callback, cb, id_result_hash)

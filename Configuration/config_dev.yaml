@@ -19,3 +19,11 @@ DB :
     PSWD : dev123
     TECH : MYSQL
 
+  POSTGIS :
+    HOST: localhost
+    DB: mot
+    USER: louis6
+    PSWD: dev123
+    TECH: POSTGRESQL
+
+
