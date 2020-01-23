@@ -2,7 +2,7 @@
 from utils.path import *
 import os
 import logging
-from registry.DAO import REGISTRY
+from Model.DAL import DAL
 
 
 
@@ -13,14 +13,13 @@ class DAO() :
 
     def __init__(self, connection_parameters, query=None):
         self.logger = logging.getLogger(__name__)
-        self.registry = REGISTRY
         self.params = connection_parameters
         self.query = query
         self.instance = None
         self.data_to_insert = None
 
     def exec(self, args):
-        connector = self.registry.get('technology').get(self.params.get('TECH'))
+        connector = DAL(self.params.get('TECH')).connect()
         if connector :
             if args :
                 self.data_to_insert = args

@@ -1,68 +1,51 @@
-import sqlalchemy as db
-from sqlalchemy.ext.automap import automap_base
 
 # -*- coding: utf-8 -*-
 from Configuration.Config import Config
-import pyodbc
-import mysql
-from utils.control import skip_nones
 
-class Dal(type):
-    _instances = {}
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls._instances:
-            cls._instances[cls] = super(Dal, cls).__call__(*args, **kwargs)
-        return cls._instances[cls]
+class DAL() :
 
-
-
-class SqlServerDB():
-    __metaclass__ = Dal
-    def __init__(self, server, dbname, user, password):
-        self.server = server
-        self.database = dbname
-        self.username = user
-        self.password = password
+    def __init__(self, Instance_Name):
+        self.instance_name = Instance_Name
         self.connection = None
-        self.cursor = None
 
     def connect(self):
-        self.connection = pyodbc.connect("DRIVER={SQL Server};SERVER=%s;DATABASE=%s;UID=%s;PWD=%s"
-                                         % (self.server, self.database, self.username, self.password))
-        self.cursor = self.connection.cursor()
+        config = self.getConfig()
+        connector = getattr(self, config.get('TECH'))(config)
+        return connector
 
-class MySQLDB() :
-    @skip_nones
-    def __init__(self, user, password, dbname, host='127.0.0.1', port=3306):
-        self.host = host
-        self.port = port
-        self.username = user
-        self.password = password
-        self.connection = None
-        self.cursor = None
-        self.database = dbname
+    def getConfig(self) :
+        return Config().get_property('DB').get(self.instance_name)
 
-    def connect(self):
-        self.connection = mysql.connector.connect(
-            host=self.host,
-            user=self.username,
-            passwd=self.password ,
-            database=self.database
-        )
-        self.cursor = self.connection.cursor()
+    def MS_SQL(self, config):
+        try :
+            from Model.connector.MS_SQL import SqlServerDB
+        except ImportError as e :
+            print("Cannot get SQL server connector : " + str(e))
+            return None
+        conn = SqlServerDB(config.get('SERVER'), config.get('INSTANCE'), config.get('USER'), config.get('PSWD'))
+        conn.connect()
+        return conn
 
+    def MYSQL(self, config):
+        try :
+            from Model.connector.MySQL import MySQLDB
+        except ImportError as e :
+            print("Cannot get SQL server connector : " + str(e))
+            return None
+        conn = MySQLDB(config.get('USER'),  config.get('PSWD'), config.get('DB'), config.get('HOST'), config.get('PORT'))
+        conn.connect()
+        return conn
 
-def SQLServerConnector(Instance_Name):
-    config = Config.get('DB').get(Instance_Name)
-    conn = SqlServerDB(config.get('SERVER'), config.get('INSTANCE'), config.get('USER'), config.get('PSWD'))
-    conn.connect()
-    return conn
+    def POSTGRESQL(self, config) :
+        try :
+            from Model.connector.PostGreSQL import PGDB
+        except ImportError as e :
+            print("Cannot get SQL server connector : " + str(e))
+            return None
+        conn = PGDB(config.get('USER'),  config.get('PSWD'), config.get('DB'), config.get('HOST'), config.get('PORT'))
+        conn.connect()
+        return conn
 
-def MySQLConnector(Instance_Name):
-    config = Config().get_property('DB').get(Instance_Name)
-    conn = MySQLDB(config.get('USER'),  config.get('PSWD'), config.get('DB'), config.get('HOST'), config.get('PORT'))
-    conn.connect()
-    return conn
 
 
 
@@ -72,13 +55,14 @@ def MySQLConnector(Instance_Name):
 
 
 if __name__ == '__main__' :
+    pass
 
 
-        engine = db.create_engine("mysql+pymysql://root:dev123@localhost:3306/sde")
-
-        Base = automap_base()
-        Base.prepare(engine, reflect=True)
-        print(Base.classes.keys())
+        # engine = db.create_engine("mysql+pymysql://root:dev123@localhost:3306/sde")
+        #
+        # Base = automap_base()
+        # Base.prepare(engine, reflect=True)
+        # print(Base.classes.keys())
 
 
         '''SELECT ALL'''
