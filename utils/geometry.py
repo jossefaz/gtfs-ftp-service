@@ -94,8 +94,6 @@ def checkLinesFromFile(workFile, AOI, filterType):
     with open(workFile, encoding='utf-8-sig') as f :
 
         for line in f:
-            if len(All_routes) > 5 :
-                break
             if Current_route_id == -1 :
                 attrTuple = namedtuple('attributes', line.strip('\n').split(','))
                 Current_route_id  = 0

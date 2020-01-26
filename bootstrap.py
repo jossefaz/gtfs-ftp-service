@@ -31,8 +31,8 @@ if __name__ == '__main__' :
                 is_zip = False
                 ftp = FtpLoader(url, outDir=download_dir)
                 for file, props in dict_files.items() :
-                    # downloaded = ftp.downloadFileItem(file)
-                    # if downloaded :
+                    downloaded = ftp.downloadFileItem(file)
+                    if downloaded :
                         if zipfile.is_zipfile(os.path.join(download_dir, file)) :
                             is_zip = True
                             with zipfile.ZipFile(os.path.join(download_dir, file), 'r') as zip_ref:
@@ -47,9 +47,9 @@ if __name__ == '__main__' :
                                     execute(geo_filter, cb=f.get('CB', []))
 
 
-                    # else :
-                    #     logger.error("Error occured while downloadind the file {}. Check logs".format(file))
-                    #     continue
+                    else :
+                        logger.error("Error occured while downloadind the file {}. Check logs".format(file))
+                        continue
             else :
                 logger.error("Error occured while trying to access the file list of domain {}. Check if you wrote a file list for this domain in the ftp_url.yaml config file".format(dom))
                 continue
