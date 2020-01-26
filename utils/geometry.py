@@ -1,10 +1,11 @@
 import csv
 from functools import partial
 from shapely.ops import transform
-from shapely.geometry import Point
+from shapely.geometry import Point, LineString
 from utils.projections import *
 from utils.control import timing
 from utils.path import *
+from collections import namedtuple
 import os
 
 import shapely.wkt
@@ -54,19 +55,22 @@ def checkPointsFromFile(workFile, AOI, filterType) :
     all_points = {}
     hash_id = {}
     firstLine = -1
-    with open(workFile, encoding='utf-8') as f :
+    attrTuple = None
+    with open(workFile, encoding='utf-8-sig') as f :
         for line in f:
                 if firstLine == -1 :
+                    attrTuple = namedtuple('attributes', line.strip('\n').split(','))
                     firstLine = 0
                     continue
                 try:
                     point = line.strip('\n').split(',')
                     pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
                     if checkPointPolygonList(pointCheck, AOI, filterType) :
-                        all_points[point[id_index]] = [line.strip('\n'), pointCheck.wkt]
+                        all_points[point[id_index]] = {'attr' : attrTuple(*point), 'geom' : pointCheck}
                         hash_id[point[id_index]] = point[id_index]
                 #Commentaire
-                except :
+                except Exception as e:
+                    print(str(e))
                     continue
         return { "result" : all_points, "ids" : hash_id}
 
@@ -83,13 +87,17 @@ def checkLinesFromFile(workFile, AOI, filterType):
     All_routes = {}
     hash_id = {}
     i = 0
+    attrTuple = None
     Current_route_points = []
     Current_route_id = -1
     Current_route_intersect = False
-    with open(workFile, encoding='utf-8') as f :
+    with open(workFile, encoding='utf-8-sig') as f :
 
         for line in f:
+            if len(All_routes) > 5 :
+                break
             if Current_route_id == -1 :
+                attrTuple = namedtuple('attributes', line.strip('\n').split(','))
                 Current_route_id  = 0
                 continue
             try:
@@ -112,7 +120,7 @@ def checkLinesFromFile(workFile, AOI, filterType):
                 # NEW ROUTE
                 #set the new Current route id
                 if len(Current_route_points) > 0 :
-                    All_routes[Current_route_id] = Current_route_points
+                    All_routes[Current_route_id] = {'attr' : attrTuple(*point), 'geom' : LineString(Current_route_points)}
                     hash_id[Current_route_id] = Current_route_id
                     Current_route_points = []
 

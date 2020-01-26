@@ -1,7 +1,7 @@
 WS :
   DOWNLOAD :
     MOT : download
-  EXTRACTED :
+  EXTRACT :
     MOT : extract
 
 DB :
@@ -22,7 +22,7 @@ DB :
   POSTGIS :
     HOST: localhost
     DB: mot
-    USER: louis6
+    USER: postgres
     PSWD: dev123
     TECH: POSTGRESQL
 

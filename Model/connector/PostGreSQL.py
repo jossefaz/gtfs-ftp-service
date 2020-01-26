@@ -18,10 +18,16 @@ class PGDB() :
         self.database = dbname
 
     def connect(self):
-        self.connection = mysql.connector.connect(
+        self.connection = psycopg2.connect(
             host=self.host,
             user=self.username,
-            passwd=self.password ,
-            database=self.database
+            password=self.password ,
+            dbname=self.database
         )
         self.cursor = self.connection.cursor()
+
+if __name__ == '__main__' :
+    pass
+    # con = PGDB('louis6', 'dev123', 'mot', 'localhost')
+    # con.connect()
+    # con.cursor.execute('CREATE TABLE testGeo')

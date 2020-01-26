@@ -4,47 +4,47 @@ URL :
 FILES :
   MOT :
     israel-public-transportation.zip :
-#        - NAME : stops.txt
-#          ITYPE : GEO
-#          GEO_TYPE : point
-#          AOI : JERUSALEM
-#          FILTER_TYPE : within
-#          RESULT_NAME: stops
-#          CB:
-#            - NAME: filterAlphanum
-#              ITYPE : TABLES
-#              TABLES:
-#                - NAME: stop_times.txt
-#                  ITYPE : ALPHA
-#                  PATH: download
-#                  JOIN_FIELD: stop_id
-#                  FOOD_FIELDS:
-#                    - trip_id
-#                    - arrival_time
-#                    - departure_time
-#                    - stop_id
-#                    - stop_sequence
-#                    - pickup_type
-#                    - drop_off_type
-#                    - shape_dist_traveled
-#                  RESULT_NAME: stops.time
-#                  LINKED_TO : stops
-#                  CB :
-#                    - NAME : DB
-#                      ITYPE : DB_CB
-#                      INSTANCE : MY_SQL_SDE
-#                      ACTION : insert
-#                      TABLE : stop_times
-#                      RESULT_NAME: stops.time.db
-#                      LINKED_TO: stops.time
+        - NAME : stops.txt
+          ITYPE : GEO
+          GEO_TYPE : point
+          AOI : JERUSALEM
+          FILTER_TYPE : within
+          RESULT_NAME: stops
+          CB:
+            - NAME: filterAlphanum
+              ITYPE : TABLES
+              TABLES:
+                - NAME: stop_times.txt
+                  ITYPE : ALPHA
+                  PATH: download
+                  JOIN_FIELD: stop_id
+                  FOOD_FIELDS:
+                    - trip_id
+                    - arrival_time
+                    - departure_time
+                    - stop_id
+                    - stop_sequence
+                    - pickup_type
+                    - drop_off_type
+                    - shape_dist_traveled
+                  RESULT_NAME: stops.time
+                  LINKED_TO : stops
+                  CB :
+                    - NAME : DB
+                      ITYPE : DB_CB
+                      INSTANCE : MY_SQL_SDE
+                      ACTION : insert
+                      TABLE : stop_times
+                      RESULT_NAME: stops.time.db
+                      LINKED_TO: stops.time
 
             - NAME: DB
               ITYPE: DB
               INSTANCE: POSTGIS
               ACTION: insertGeo
-              TABLE: stop_times
+              TABLE: stops_geom
               RESULT_NAME: stops.time.db
-              LINKED_TO: stops.time
+              LINKED_TO: stops
 
         - NAME : shapes.txt
           ITYPE : GEO
@@ -72,9 +72,9 @@ FILES :
               ITYPE: DB
               INSTANCE: POSTGIS
               ACTION: insertGeo
-              TABLE: stop_times
+              TABLE: shapes
               RESULT_NAME: stops.time.db
-              LINKED_TO: stops.time
+              LINKED_TO: shapes
 
 
 
