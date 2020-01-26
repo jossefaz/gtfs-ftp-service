@@ -64,7 +64,7 @@ class FtpLoader():
         if not self.waiting:
             i = file.tell()
             if self.ptr < i:
-                self.logger.debug("%d  -  %0.1f Kb/s" % (i, (i - self.ptr) / (1024 * MONITOR_INTERVAL)))
+                self.logger.debug("{} MB  -  {} Kb/s".format(str(int(i/1000000)), str(int((i - self.ptr) / (1024 * MONITOR_INTERVAL)))))
                 self.ptr = i
             else:
                 self.ftp.close()

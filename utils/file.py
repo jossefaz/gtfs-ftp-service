@@ -21,6 +21,7 @@ def read_in_chunks(file_object, chunk_size=1024):
 
 
 
+
 def chunkify(fname,size=1024*1024):
     fileEnd = os.path.getsize(fname)
     with open(fname,'rb') as f:
@@ -50,21 +51,21 @@ def readHugeFile(fname, joinF, id_result_hash, field_map_index, field_dict) :
     pool.close()
 
 if __name__ == "__main__":
-
-    data_file_name = '/home/louis6/Documents/ness/MOT/mot_py/download/stop_times.txt'
-
-    # importing pandas package
-    import pandas as pd
-    from sqlalchemy import create_engine
-
-    engine = create_engine('sqlite://', echo=False)
-    # making data frame from csv file
-    data = pd.read_csv(data_file_name)
-    df = pd.DataFrame(data)
-    df.to_sql('stops_time', con=engine)
-    cur = engine.execute("SELECT * FROM stops_time WHERE stop_id = 3803").fetchall()
-    for i in cur.fetchall() :
-        print(i)
+    pass
+    # data_file_name = '/home/louis6/Documents/ness/MOT/mot_py/download/stop_times.txt'
+    #
+    # # importing pandas package
+    # import pandas as pd
+    # from sqlalchemy import create_engine
+    #
+    # engine = create_engine('sqlite://', echo=False)
+    # # making data frame from csv file
+    # data = pd.read_csv(data_file_name)
+    # df = pd.DataFrame(data)
+    # df.to_sql('stops_time', con=engine)
+    # cur = engine.execute("SELECT * FROM stops_time WHERE stop_id = 3803").fetchall()
+    # for i in cur.fetchall() :
+    #     print(i)
 
 
 

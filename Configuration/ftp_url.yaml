@@ -16,7 +16,7 @@ FILES :
               TABLES:
                 - NAME: stop_times.txt
                   ITYPE : ALPHA
-                  PATH: download
+                  PATH: extract
                   JOIN_FIELD: stop_id
                   FOOD_FIELDS:
                     - trip_id
@@ -58,7 +58,7 @@ FILES :
               TABLES :
                 - NAME : trips.txt
                   ITYPE : ALPHA
-                  PATH : download
+                  PATH : extract
                   JOIN_FIELD : shape_id
                   RESULT_NAME: shapes.trips
                   LINKED_TO: shapes
