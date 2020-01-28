@@ -75,3 +75,14 @@ MOT_venv/
 logger/logs/
 
 download/
+
+__pycache__/
+
+extract/
+
+pypi.tar.gz
+
+offline_pypi/
+
+nohup.out
+

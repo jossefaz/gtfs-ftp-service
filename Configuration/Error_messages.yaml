@@ -1,0 +1,11 @@
+
+Error_Message :
+  Sanitary :
+    DB :
+      ANY_DB_FOUND : "Any database configuration were found, please check that the configuration file is Ok and a DB parameter is present"
+      CONNECTION_FAILED : "Cannot connect to DB {} check the connection to Server or the DB name, Error from python : {}"
+      NO_NAMED_INSTANCE : "Each DB must have an instance name"
+    INTERNET_CONNECTION_FAILED : "No Network / Internet connection, check internet before using this program"
+    STORE_FAILED : "Cannot instanciate store, please check Store class status"
+    FTP_URLS_INVALID : 'FTP cannot connect to thoses URLS : {} all config files from these url will be ignored'
+

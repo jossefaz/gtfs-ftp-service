@@ -22,7 +22,7 @@ class DAL() :
         except ImportError as e :
             print("Cannot get SQL server connector : " + str(e))
             return None
-        conn = SqlServerDB(config.get('SERVER'), config.get('INSTANCE'), config.get('USER'), config.get('PSWD'))
+        conn = SqlServerDB(config=config)
         conn.connect()
         return conn
 

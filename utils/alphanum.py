@@ -10,7 +10,7 @@ def fieldMapper(file,fields, logger):
     field_dict = {}
     for field in fields :
         if field not in  ref_fields:
-            logger.warning("field {} of file {} from the ftp_url.yaml was not found in the downloaded file, check mispelling".format(field, file))
+            logger.warning("field {} of file {} from the pipeline.yaml was not found in the downloaded file, check mispelling".format(field, file))
             continue
         fields_filtered.append(ref_fields.index(field))
         field_dict[ref_fields.index(field)] = field

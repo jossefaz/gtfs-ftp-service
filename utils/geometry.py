@@ -8,6 +8,7 @@ from utils.path import *
 from collections import namedtuple
 import os
 
+
 import shapely.wkt
 def chechPointWithinPolygon(point, polygon) :
     return point.within(polygon)
@@ -23,8 +24,15 @@ def getTransformer(fromCRS, toCRS):
     project = partial(pyproj.transform,fromCRS, toCRS)
     return project
 
+def transformWKT(feature, fromCRS, toCRS) :
+    project = getTransformer(projections[fromCRS], projections[toCRS])
+    converted = transform(project, feature)
+    return converted.wkt
+
+
+
 def getJerusalemBorder() :
-    project = getTransformer(israel_tm_grid, wgs84)
+    project = getTransformer(projections['wgs84'], projections['israel'])
     jerusalem_polygon = []
     workFile = os.path.join(GetParentDir(os.path.dirname(__file__)), 'ressource/border2.csv')
     polylist = list(csv.reader(open(workFile, 'r'), delimiter='|'))
@@ -59,14 +67,16 @@ def checkPointsFromFile(workFile, AOI, filterType) :
     with open(workFile, encoding='utf-8-sig') as f :
         for line in f:
                 if firstLine == -1 :
-                    attrTuple = namedtuple('attributes', line.strip('\n').split(','))
+                    attr_list = [i for j, i in enumerate(line.strip('\n').split(',')) if j not in [lat_index, lon_index]]
+                    attrTuple = namedtuple('attributes', attr_list)
                     firstLine = 0
                     continue
                 try:
                     point = line.strip('\n').split(',')
                     pointCheck = Point(float(point[lat_index]), float(point[lon_index]))
                     if checkPointPolygonList(pointCheck, AOI, filterType) :
-                        all_points[point[id_index]] = {'attr' : attrTuple(*point), 'geom' : pointCheck}
+                        attr_list = [i for j, i in enumerate(point) if j not in [lat_index, lon_index]]
+                        all_points[point[id_index]] = {'attr' : attrTuple(*attr_list), 'geom' : pointCheck}
                         hash_id[point[id_index]] = point[id_index]
                 #Commentaire
                 except Exception as e:

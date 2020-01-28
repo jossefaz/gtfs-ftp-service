@@ -26,8 +26,9 @@ class Config():
             self.logger.error(configFiles.get("NOT_FOUND"))
             sys.exit(1)
         config_file = os.path.join(os.path.dirname(__file__), configFiles.get(sys.argv[1]))
-        ftp_urls = os.path.join(os.path.dirname(__file__),'ftp_url.yaml')
-        conf = hiyapyco.load(config_file, ftp_urls, method=hiyapyco.METHOD_MERGE, interpolate=True,
+        ftp_urls = os.path.join(os.path.dirname(__file__),'pipeline.yaml')
+        error_messages = os.path.join(os.path.dirname(__file__),'Error_messages.yaml')
+        conf = hiyapyco.load(config_file, ftp_urls,error_messages, method=hiyapyco.METHOD_MERGE, interpolate=True,
                              failonmissingfiles=True)
         return conf
 

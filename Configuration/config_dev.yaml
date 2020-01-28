@@ -3,14 +3,31 @@ WS :
     MOT : download
   EXTRACT :
     MOT : extract
-
+SQL :
+  SDE_GEO :
+    INSERT : "INSERT INTO {tablename} (OBJECTID, {columns}, SHAPE) VALUES ({OBJECTID},{values},geometry::STGeomFromText('{geom}', {srid}))"
+    UPDATE_TO_FALSE : "UPDATE {} SET [commit_status] = -1 WHERE  [commit_status] = 1"
 DB :
-  SDE :
-    SERVER : NTSQLSDE12
-    INSTANCE : SDE
-    USER : sde
-    PSWD : sde
-    TECH : MSSQL
+  SDE_ALPHANUM :
+    SERVER : NTSQL-PIT12\SQLTEST16
+    INSTANCE : DB_GIS
+    AD : yes
+    USER : null
+    PSWD : null
+    TECH : MS_SQL
+    IS_SDE : yes
+    MANDATORY : yes
+
+  SDE_GEO:
+    SERVER: NTSQLSDE12
+    INSTANCE: SDE
+    AD: no
+    USER: sde
+    PSWD: sde
+    TECH: MS_SQL
+    IS_SDE : yes
+    SRID : 2039
+    MANDATORY : yes
 
   MY_SQL_SDE :
     HOST : localhost
@@ -18,6 +35,9 @@ DB :
     USER : louis6
     PSWD : dev123
     TECH : MYSQL
+    IS_SDE : no
+    MANDATORY : no
+
 
   POSTGIS :
     HOST: localhost
@@ -25,5 +45,7 @@ DB :
     USER: postgres
     PSWD: dev123
     TECH: POSTGRESQL
+    IS_SDE : no
+    MANDATORY : no
 
 

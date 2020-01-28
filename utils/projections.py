@@ -1,4 +1,6 @@
-import  pyproj
+import pyproj
 
-wgs84=pyproj.Proj("EPSG:4326")
-israel_tm_grid = pyproj.Proj("EPSG:2039")
+projections = {
+    "israel": pyproj.Proj("EPSG:4326"),
+    "wgs84": pyproj.Proj("EPSG:2039")
+}
