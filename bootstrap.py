@@ -34,6 +34,7 @@ if __name__ == '__main__' :
     db_connection = Sanity.checkDBConnection()
     if not db_connection :
         sys.exit(1)
+
     banned_urls = Sanity.checkFTPCOnnection()
     urls = [url for url in config.get_property("URL") if url not in banned_urls]
     if not len(urls) > 0 :
@@ -42,6 +43,9 @@ if __name__ == '__main__' :
     pipelineFile = Sanity.checkPipeLineFile(urls)
     if not pipelineFile :
         sys.exit(1)
+
+
+
     mainStore = store.get_instance()
     logger.info('Sanity check passed')
     for domain in urls :
@@ -68,7 +72,7 @@ if __name__ == '__main__' :
                                     geo_filter = GeoFilter(fileConfig, target_dir)
                                     execute(geo_filter, cb=f.get('CB', []))
 
-                    #
+
                     # else :
                     #     logger.error("Error occured while downloadind the file {}. Check logs".format(file))
                     #     continue

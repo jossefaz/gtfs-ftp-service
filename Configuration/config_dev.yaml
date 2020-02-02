@@ -3,23 +3,25 @@ WS :
     MOT : download
   EXTRACT :
     MOT : extract
-SQL :
-  SDE_GEO :
-    INSERT : "INSERT INTO {tablename} (OBJECTID, {columns}, SHAPE) VALUES ({OBJECTID},{values},geometry::STGeomFromText('{geom}', {srid}))"
-    UPDATE_TO_FALSE : "UPDATE {} SET [commit_status] = -1 WHERE  [commit_status] = 1"
 DB :
   SDE_ALPHANUM :
-    SERVER : NTSQL-PIT12\SQLTEST16
-    INSTANCE : DB_GIS
-    AD : yes
-    USER : null
-    PSWD : null
+    SERVER : NTSQLSDE12
+    SCHEMA : dbo
+    INSTANCE : SDE
+    AD: no
+    USER: sde
+    PSWD: sde
     TECH : MS_SQL
     IS_SDE : yes
     MANDATORY : yes
+    SQL:
+      INSERT: "INSERT INTO {tablename} (OBJECTID, {columns}, SHAPE) VALUES ({OBJECTID},{values},geometry::STGeomFromText('{geom}', {srid}))"
+      UPDATE_TO_FALSE: "UPDATE {} SET commit_status = -1 WHERE  commit_status = 1"
+      UPDATE_TO_TRUE: "UPDATE {} SET commit_status = 1 WHERE commit_status is null"
 
   SDE_GEO:
     SERVER: NTSQLSDE12
+    SCHEMA : sde
     INSTANCE: SDE
     AD: no
     USER: sde
@@ -28,6 +30,14 @@ DB :
     IS_SDE : yes
     SRID : 2039
     MANDATORY : yes
+    SQL:
+      INSERT: "INSERT INTO {tablename} (OBJECTID, {columns}, SHAPE) VALUES ({OBJECTID},{values},geometry::STGeomFromText('{geom}', {srid}))"
+      UPDATE_TO_FALSE: "UPDATE {} SET commit_status = -1 WHERE  commit_status = 1"
+      UPDATE_TO_TRUE: "UPDATE {} SET commit_status = 1 WHERE commit_status is null"
+      UPDATE_ROUTES_ALPHANUM : "UPDATE BR SET BR.route_id = R.route_id,BR.route_short_name = R.route_short_name,BR.route_desc = R.route_desc,BR.route_long_name = R.route_long_name FROM {} BR, [MOTroutes] R, [MOTtrips] T WHERE T.route_id = R.route_id AND T.shape_id=BR.shape_id"
+      UPDATE_BUSSTOPS_LINE : "select stuff((select ',' + R.route_short_name FROM BUSSTOPS_NEW BS JOIN [MOTstop_times] ST ON ST.stop_id=BS.stop_id JOIN [MOTtrips] T ON T.trip_id = ST.trip_id JOIN [MOTroutes] R ON R.route_id = T.route_id WHERE BS.stop_id={} GROUP BY R.route_short_name ORDER BY COUNT(*) DESC for xml path ('')), 1, 1, '')"
+      UPDATE_TO_DF : "SELECT BS2.stop_id, STUFF((SELECT DISTINCT(',' + R.route_short_name) FROM BUSSTOPS_NEW BS1 JOIN [MOTstop_times] ST ON ST.stop_id=BS1.stop_id JOIN [MOTtrips] T ON T.trip_id = ST.trip_id JOIN [MOTroutes] R ON R.route_id = T.route_id WHERE BS1.stop_id = BS2.stop_id AND commit_status = 1 FOR XML PATH('')  ),1, 1, '' ) AS val  FROM  BUSSTOPS_NEW BS2 WHERE commit_status = 1"
+
 
   MY_SQL_SDE :
     HOST : localhost

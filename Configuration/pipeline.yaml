@@ -10,34 +10,45 @@ FILES :
           AOI : JERUSALEM
           FILTER_TYPE : within
           RESULT_NAME: stops
+          FIELDS :
+            - stop_id
+            - stop_code
+            - stop_name
+            - stop_desc
+            - location_type
+            - parent_station
+            - zone_id
           CB:
-#            - NAME: filterAlphanum
-#              ITYPE : TABLES
-#              TABLES:
-#                - NAME: stop_times.txt
-#                  ITYPE : ALPHA
-#                  PATH: extract
-#                  JOIN_FIELD: stop_id
-#                  FOOD_FIELDS:
-#                    - trip_id
-#                    - arrival_time
-#                    - departure_time
-#                    - stop_id
-#                    - stop_sequence
-#                    - pickup_type
-#                    - drop_off_type
-#                    - shape_dist_traveled
-#                  RESULT_NAME: stops.time
-#                  LINKED_TO : stops
-#                  CB :
-#                    - NAME : DB
-#                      ITYPE : DB_CB
-#                      INSTANCE : SDE_ALPHANUM
-#                      ACTION : insert
-#                      TABLE : stop_times
-#                      RESULT_NAME: stops.time.db
-#                      LINKED_TO: stops.time
-#
+            - NAME: filterAlphanum
+              ITYPE : TABLES
+              TABLES:
+                - NAME: stop_times.txt
+                  ITYPE : ALPHA
+                  PATH: extract
+                  JOIN_FIELD: stop_id
+                  FIELDS:
+                    - trip_id
+                    - arrival_time
+                    - departure_time
+                    - stop_id
+                    - stop_sequence
+                    - pickup_type
+                    - drop_off_type
+                    - shape_dist_traveled
+                  RESULT_NAME: stops.time
+                  LINKED_TO : stops
+                  CB :
+                    - NAME : DB
+                      ITYPE : DB
+                      INSTANCE : SDE_ALPHANUM
+                      BEFORE : no
+                      MAIN :
+                        - insert
+                      AFTER : no
+                      TABLE : MOTstop_times
+                      RESULT_NAME: stops.time.db
+                      LINKED_TO: stops.time
+
             - NAME: DB
               ITYPE: DB
               INSTANCE: SDE_GEO
@@ -45,41 +56,113 @@ FILES :
                 - NAME : UPDATE_TO_FALSE
                   PARAMETERS :
                     - BUSSTOPS_NEW
-              MAIN: insertGeo
-              AFTER : no
+              MAIN:
+                - insertGeo
+              AFTER :
+                - NAME: UPDATE_TO_TRUE
+                  PARAMETERS:
+                    - BUSSTOPS_NEW
               TABLE: BUSSTOPS_NEW
               RESULT_NAME: stops.geo
               LINKED_TO: stops
+
 
         - NAME : shapes.txt
           ITYPE : GEO
           GEO_TYPE: line
           AOI: JERUSALEM
           FILTER_TYPE : within
-          RESULT_NAME : shapes
+          RESULT_NAME : routes
+          FIELDS:
+            - shape_id
           CB:
             - NAME: filterAlphanum
               ITYPE : TABLES
               TABLES :
-                - NAME : trips.txt
-                  ITYPE : ALPHA
-                  PATH : extract
-                  JOIN_FIELD : shape_id
-                  RESULT_NAME: shapes.trips
-                  LINKED_TO: shapes
-                  FOOD_FIELDS :
+                - NAME: trips.txt
+                  ITYPE: ALPHA
+                  PATH: extract
+                  JOIN_FIELD: shape_id
+                  RESULT_NAME: routes.alphanum
+                  LINKED_TO: routes
+                  FIELDS:
                     - route_id
                     - service_id
                     - trip_id
                     - trip_headsign
                     - direction_id
+                    - shape_id
+                  CB:
+                    - NAME: DB
+                      ITYPE: DB
+                      INSTANCE: SDE_ALPHANUM
+                      BEFORE: no
+                      MAIN:
+                        - insert
+                      AFTER: no
+                      TABLE: MOTtrips
+                      RESULT_NAME: routes.alphanum.db
+                      LINKED_TO: routes.alphanum
+                - NAME: routes.txt
+                  ITYPE: ALPHA
+                  PATH: extract
+                  JOIN_FIELD: route_id
+                  RESULT_NAME: routes.alphanum.routes
+                  LINKED_TO: routes.alphanum
+                  FIELDS:
+                    - route_id
+                    - agency_id
+                    - route_short_name
+                    - route_long_name
+                    - route_desc
+                    - route_type
+                    - route_color
+                  CB:
+                    - NAME: DB
+                      ITYPE: DB
+                      INSTANCE: SDE_ALPHANUM
+                      BEFORE: no
+                      MAIN:
+                        - insert
+                      AFTER: no
+                      TABLE: MOTroutes
+                      RESULT_NAME: routes.alphanum.routes.db
+                      LINKED_TO: routes.alphanum.routes
+
             - NAME: DB
               ITYPE: DB
-              INSTANCE: POSTGIS
-              ACTION: insertGeo
-              TABLE: shapes
-              RESULT_NAME: stops.time.db
-              LINKED_TO: shapes
+              INSTANCE: SDE_GEO
+              BEFORE:
+                - NAME: UPDATE_TO_FALSE
+                  PARAMETERS:
+                    - BusRoutes_New
+              MAIN:
+                - insertGeo
+              AFTER :
+                - NAME: UPDATE_TO_TRUE
+                  PARAMETERS:
+                    - BusRoutes_New
+                - NAME: UPDATE_ROUTES_ALPHANUM
+                  PARAMETERS:
+                    - BusRoutes_New
+              TABLE: BUSROUTES_NEW
+              RESULT_NAME: routes.db
+              LINKED_TO: routes
+            - NAME: DB
+              ITYPE: DB
+              INSTANCE: SDE_GEO
+              BEFORE: no
+              MAIN:
+                - NAME: updateAll
+                  PARAMETERS:
+                    SQL: UPDATE_BUSSTOPS_LINE
+                    FIELD_TO_UPDATE: route_names
+                    WHERE: "commit_status = 1"
+                    ID_FIELD: stop_id
+              AFTER: no
+              TABLE: BUSSTOPS_NEW
+              RESULT_NAME: stops.geo.updated
+              LINKED_TO: stops
 
 
 

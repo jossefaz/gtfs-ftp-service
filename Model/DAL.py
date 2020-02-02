@@ -1,5 +1,6 @@
 
 # -*- coding: utf-8 -*-
+
 from Configuration.Config import Config
 
 class DAL() :

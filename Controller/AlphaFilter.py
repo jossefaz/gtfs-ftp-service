@@ -20,7 +20,7 @@ class AlphaFilter(baseClass) :
         self.filterType = self.registry.get('filter').get(filter_type, None)
         self.query = sql_query if sql_query is not None else id_hash[1] if isinstance(id_hash, tuple) else id_hash.get('ids')
         self.file_path = os.path.join(GetParentDir(os.path.dirname(__file__)), table_config.PATH, table_config.NAME) if table_config is not None else os.path.join(GetParentDir(os.path.dirname(__file__)), directory, filename)
-        self.fields = table_config.FOOD_FIELDS if table_config is not None else None
+        self.fields = table_config.FIELDS if table_config is not None else None
         self.field_map_index = []
         self.field_dict = {}
         self.indexfield = table_config.JOIN_FIELD if table_config is not None else None
@@ -34,7 +34,7 @@ class AlphaFilter(baseClass) :
         try :
             if self.filterType is None :
                 raise ValueError("the action you specified in config.yaml does not exist in the registry, check mispelling. It must be one of these : {}".format(u' , '.join(self.registry.get('filter').keys())))
-            result = self.filterType(self.file_path, self.query, self.indexfield, self.logger, self.field_map_index, self.field_dict)
+            result = self.filterType(self.file_path, self.query, self.indexfield, self.logger, self.field_map_index, self.field_dict, self.fields)
             self.store.set_result(self.result_name, result)
             if len(cbs) > 0:
                 self.runPipeline(cbs)
