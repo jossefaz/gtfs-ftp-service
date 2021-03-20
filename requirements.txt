@@ -7,7 +7,7 @@ cligj==0.5.0
 docopt==0.6.2
 HiYaPyCo==0.4.15
 idna==2.8
-Jinja2==2.10.3
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 munch==2.5.0
 mysql-connector==2.2.9
